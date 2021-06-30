@@ -1,19 +1,22 @@
-let page = Math.ceil(Math.random() * 10);
+let movie;
+let btn = document.getElementById("launch");
+function pickMovie(genres) {
+  let page = Math.ceil(Math.random() * 10);
+  fetch(
+    `http://api.themoviedb.org/3/discover/movie?api_key=eb7b39196026d99a9bb9dd30201f9b64&sort_by=vote_count.desc&with_genres=${genres}&page=${page}`
+  )
+    .then((value) => value.json())
+    .then((value) => {
+      // console.log(value);
 
-fetch(
-  `http://api.themoviedb.org/3/discover/movie?api_key=eb7b39196026d99a9bb9dd30201f9b64&sort_by=vote_count.desc&with_genres=28,35&page=${page}`
-)
-  .then((value) => value.json())
-  .then((value) => {
-    console.log(value);
+      let whichMovie = Math.floor(Math.random() * 20);
+      movie = value.results[whichMovie].id;
+      console.log(page + " " + whichMovie);
+      getMovie(movie);
 
-    let whichMovie = Math.floor(Math.random() * 20);
-    const movie = value.results[whichMovie].id;
-    getMovie(movie);
-
-    //json response
-  });
-
+      //json response
+    });
+}
 function getMovie(movie) {
   fetch(
     "https://api.themoviedb.org/3/movie/" +
@@ -22,7 +25,7 @@ function getMovie(movie) {
   )
     .then((value) => value.json())
     .then((value) => {
-      console.log(value);
+      // console.log(value);
       let cast = [];
       for (let i = 0; i < 6; i++) {
         cast.push(value.credits.cast[i].name);
@@ -57,8 +60,9 @@ function getMovie(movie) {
   `;
     });
 }
-// //
-// 0: {id: 28, name: "Action"}
+var userGenre = document.getElementById("genre").value;
+btn.addEventListener("click", () => pickMovie(userGenre));
+// / 0: {id: 28, name: "Action"}
 // 1: {id: 12, name: "Adventure"}
 // 2: {id: 16, name: "Animation"}
 // 3: {id: 35, name: "Comedy"}
@@ -76,4 +80,4 @@ function getMovie(movie) {
 // 15: {id: 10770, name: "TV Movie"}
 // 16: {id: 53, name: "Thriller"}
 // 17: {id: 10752, name: "War"}
-// 18: {id: 37, name: "Western"}
+// 18: {id: 37, name: "Western"}//

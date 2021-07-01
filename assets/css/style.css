@@ -1,0 +1,27 @@
+.tabs {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.tabs > li {
+  float: left;
+  padding: 10px;
+  background-color: blue;
+}
+
+ul.tabs > li:hover {
+  background-color: lightgray;
+}
+
+ul.tabs > li.selected {
+  background-color: black;
+}
+
+div.content {
+  border: 1px solid black;
+}
+
+ul {
+  overflow: auto;
+}

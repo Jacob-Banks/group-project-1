@@ -261,9 +261,9 @@ function getMovieInfo(movie) {
 
       youtube.innerHTML = `<iframe width="320" height="315"  src=${link}></iframe>`;
 
-      $("#poster").append(`
+      $("#poster").html(`
       <img src="http://image.tmdb.org/t/p/w400/${posterPath}" />`);
-      $("#movieInfo").append(`
+      $("#movieInfo").html(`
         <h2 id="title">${title}</h2>
           <p>${description}</p>
         <h3>where to watch:</h3>
@@ -273,7 +273,16 @@ function getMovieInfo(movie) {
 }
 
 // display current
-
+$(document).ready(function () {
+  $("ul.tabs a").click(function () {
+    $(".pane div").hide();
+    $($(this).attr("href")).show();
+    return false;
+  });
+});
+$(".pure-button").on("click", function () {
+  pickMovie(genres);
+});
 $.ajax({
   url: "https://geolocation-db.com/jsonp",
   jsonpCallback: "callback",

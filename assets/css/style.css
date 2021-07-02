@@ -1,0 +1,65 @@
+#header{
+    background-color: blue;
+    height: 125px;
+    color: white;
+ 
+    
+    
+}
+
+
+#title {
+    padding-top: 25px;
+    display: flex;
+    justify-content: center;
+    font-size: 50px;
+}
+
+#aside {
+   padding: 10px;
+   width: 25%;
+   margin-right: 50px;
+}
+
+
+#search {
+    
+}
+
+.enterCity {
+    font-weight: 100;
+}
+
+#explanation {
+    margin-top: 10px;
+    height: 200px;
+    background-color: red;
+    border: black;
+    border-style: solid;
+    
+}
+
+#myList {
+   margin-top: 10px;
+   height: 400px;
+   background-color: blue;
+}
+
+#poster {
+    
+    width: 500px;
+    height: 250px;
+    border: 1px solid blue;
+    right: 0px;
+}
+
+
+
+
+#trailer {
+
+}
+
+#movieInfo {
+
+}

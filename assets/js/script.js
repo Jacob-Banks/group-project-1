@@ -7,15 +7,9 @@ let movie,
   thisPageIS,
   movieValue,
   movedLi;
-let yesArr = [];
 let userHasSeenArr = [];
-let maybeArr = [];
-let notNowArr = [];
-//let btn = document.getElementById("launch");
-
 //array items will be pages that the user has viewed all 20 movies that page responds with
 let notThesePages = [];
-
 let possiblePages = 1;
 // openweather api key
 const key = "&appid=7f412d4278c03b3c06e49f9a1ebebf0b";
@@ -23,7 +17,6 @@ const key = "&appid=7f412d4278c03b3c06e49f9a1ebebf0b";
 const oneCall = "https://api.openweathermap.org/data/2.5/onecall?";
 // call geographic coordinates
 let lat, lon, x, genres, conditions;
-let movie;
 
 // get current conditions
 var currentWeather = function () {
@@ -116,7 +109,7 @@ var currentWeather = function () {
           }
           // if rainy/cloudy and 21-30 degrees, suggest _____ genres
           if (conditions === "Clouds" && temp > 20 && temp <= 30) {
-            genres = "28,37,10402,9648";
+            genres = "28,9648";
           }
           // if ugly and 21-30, suggest _____ genres
           if (conditions === "Ugly" && temp > 20 && temp <= 30) {
@@ -159,6 +152,7 @@ var currentWeather = function () {
     }
   );
 };
+
 function pickMovie(genres) {
   page = Math.ceil(Math.random() * possiblePages); // there is no page 0
   //genre is a id number ie drama has a id of '18'---> id is string
@@ -167,6 +161,7 @@ function pickMovie(genres) {
   while (notThesePages.includes(page)) {
     page = Math.ceil(Math.random() * possiblePages);
   }
+  console.log(page + " " + genres);
 
   fetch(
     //sort all movies by vote count in provided genres on this page.. api only allows 1 page with 20 results per fetch
@@ -174,7 +169,8 @@ function pickMovie(genres) {
   )
     .then((value) => value.json())
     .then((value) => {
-      //console.log(value);
+      console.log(value);
+
       movieValue = value;
       //get which page this is
       thisPageIS = value.page;
@@ -185,36 +181,36 @@ function pickMovie(genres) {
 
       //check if user has seen this movie
 
-      if (userHasSeenArr.includes(movie)) {
-        checkMovie();
-      } else {
-        getMovieInfo(movie);
-      }
+      // if (userHasSeenArr.includes(movie)) {
+      //   checkMovie();
+      // } else {
+      getMovieInfo(movie);
+      //}
     });
 }
-function checkMovie() {
-  let seen = 0;
-  movieValue.results.forEach((element) => {
-    if (userHasSeenArr.includes(element.id)) {
-      seen++;
-    }
-  });
-  console.log(
-    "a dublicate movie was selected this page has " +
-      seen +
-      " items in user has seen array " +
-      page
-  );
-  if (seen >= 19) {
-    console.log("page full");
-    possiblePages++;
-    notThesePages.push(thisPageIS);
+// function checkMovie() {
+//   let seen = 0;
+//   movieValue.results.forEach((element) => {
+//     if (userHasSeenArr.includes(element.id)) {
+//       seen++;
+//     }
+//   });
+//   console.log(
+//     "a dublicate movie was selected this page has " +
+//       seen +
+//       " items in user has seen array " +
+//       page
+//   );
+//   if (seen >= 19) {
+//     console.log("page full");
+//     possiblePages++;
+//     notThesePages.push(thisPageIS);
 
-    pickMovie();
-  } else {
-    pickMovie();
-  }
-}
+//     pickMovie();
+//   } else {
+//     pickMovie();
+//   }
+// }
 
 function getMovieInfo(movie) {
   fetch(
@@ -254,26 +250,25 @@ function getMovieInfo(movie) {
       } else {
         logo = value["watch/providers"].results.CA.flatrate[0].logo_path;
       }
-      //<h2 id="title">${title}</h2>
-      //
-      /* <p>${description}</p>
-      <ul>
-        <li>${cast[0]}</li>
-        <li>${cast[1]}</li>
-        <li>${cast[2]}</li>
-        <li>${cast[3]}</li>
-        <li>${cast[4]}</li>
-       </ul>
-      <h3>where to watch:</h3>
-        <img src="http://image.tmdb.org/t/p/original/${logo}"/>
-      `       */
 
-      youtube.innerHTML = `     
-      <iframe width="620" height="615"  src=${link}>
-      </iframe>`;
-      $("#poster").append(
-        <img src="http://image.tmdb.org/t/p/w500/${posterPath}" />
-      );
+      // <ul>
+      //   <li>${cast[0]}</li>
+      //   <li>${cast[1]}</li>
+      //   <li>${cast[2]}</li>
+      //   <li>${cast[3]}</li>
+      //   <li>${cast[4]}</li>
+      //  </ul>
+
+      youtube.innerHTML = `<iframe width="620" height="615"  src=${link}></iframe>`;
+
+      $("#poster").append(`
+      <img src="http://image.tmdb.org/t/p/w500/${posterPath}" />`);
+      $("#movieInfo").append(`
+        <h2 id="title">${title}</h2>
+          <p>${description}</p>
+        <h3>where to watch:</h3>
+          <img src="http://image.tmdb.org/t/p/original/${logo}"/>
+      `);
     });
 }
 
@@ -287,6 +282,7 @@ $.ajax({
     lat = location.latitude;
     lon = location.longitude;
     currentWeather();
+    console.log("got lat lon");
   }, // if cant find user location
   error: function () {
     console.log("error");

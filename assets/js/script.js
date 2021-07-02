@@ -259,10 +259,10 @@ function getMovieInfo(movie) {
       //   <li>${cast[4]}</li>
       //  </ul>
 
-      youtube.innerHTML = `<iframe width="620" height="615"  src=${link}></iframe>`;
+      youtube.innerHTML = `<iframe width="320" height="315"  src=${link}></iframe>`;
 
       $("#poster").append(`
-      <img src="http://image.tmdb.org/t/p/w500/${posterPath}" />`);
+      <img src="http://image.tmdb.org/t/p/w400/${posterPath}" />`);
       $("#movieInfo").append(`
         <h2 id="title">${title}</h2>
           <p>${description}</p>

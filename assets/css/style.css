@@ -1,65 +1,74 @@
-#header{
+.container{
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.2fr 1fr 1fr 0.8fr;
+    grid-template-areas: 
+    "nav nav nav nav"
+    "search poster poster poster" 
+    "explanation trailer trailer trailer"
+    "myList movieInfo movieInfo movieInfo";
+    margin: 2px;
+    
+}
+
+.header {
     background-color: blue;
-    height: 125px;
-    color: white;
- 
-    
-    
+    grid-area: nav;
+    height: 100px;
+    width: 125%;
 }
-
-
-#title {
-    padding-top: 25px;
-    display: flex;
-    justify-content: center;
-    font-size: 50px;
-}
-
-#aside {
-   padding: 10px;
-   width: 25%;
-   margin-right: 50px;
-}
-
 
 #search {
-    
+    background-color: firebrick;
+    grid-area: search;
+    height: 400px;
 }
 
-.enterCity {
-    font-weight: 100;
+
+
+.explanation {
+    background-color: brown;
+    grid-area: explanation; 
 }
 
-#explanation {
-    margin-top: 10px;
-    height: 200px;
-    background-color: red;
-    border: black;
-    border-style: solid;
-    
-}
-
-#myList {
-   margin-top: 10px;
-   height: 400px;
-   background-color: blue;
+.myList {
+    background-color: chocolate;
+    grid-area: myList;
 }
 
 #poster {
-    
-    width: 500px;
-    height: 250px;
-    border: 1px solid blue;
-    right: 0px;
+    height: 400px;
+    grid-area: poster;
 }
-
-
-
 
 #trailer {
-
+    background-color: darkcyan;
+    grid-area: trailer;
 }
 
-#movieInfo {
+.movieInfo  {
+    background-color: darkkhaki;
+    grid-area: movieInfo;
+}
 
+img {
+    width: fit-content;
+    height: fit-content;
+}
+
+@media only screen and (max-width: 550px) {
+    .container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 0.4fr 0.4fr 2.4fr 2.4fr 3.4fr 3.4fr;
+        grid-template-areas: 
+        "nav"
+        "search"
+        "poster"
+        "explanation"
+        "myList"
+        "trailer"
+        "movieInfo"
+        ;
+    }
 }

@@ -11,48 +11,72 @@
 <body>
 
 
-    <header id= "header">
-        <h1 id= "title">No name yet</h1>
-    </header>
+    
 
 
 
-<main>
+<div class= "container">
+
+        <nav id= "title" class= "header">No name yet</nav>
+    
+
 <!--Aside elements: "search bar", "explanation of the movie" and "my List"-->
-    <aside id ="aside">
+    
     <div id= "search">
-        <input type="text" id= "searchArea" class="border-4 border-blue-500 border-opacity-100"></input>
-        <p class="enterCity">Enter your city</p>
+        <input type="text" id= "searchArea" placeholder="Enter your city"></input>
+        <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" id ="btnSearch">
+            Button
+          </button>
     </div>
 
-    <section id = "explanation">
+    <section id = "explanation" class= "explanation">
         <p>Explanation</p>
     </section>
 
-    <section id= "myList">
+    <section id= "myList" class= "myList">
         <p>My List</p>
     </section>
 
-    </aside>
 
 
-<!-- part where you'll find the poster of the movie, trailer and movie info-->
 
-      <section class= "box">
-        <div id = "poster">
-            <p>Poster</p>    
-        </div>
-        <div id= "trailer">
-            <p>Trailer</p>
-        </div>
-        </section>
 
-        
-        <div id= "movieInfo">
-            <p>Movie Info</p>
+    
+    
+        <div id = "poster" >
+            
+         <img style = "object-fit: cover;"src= "http://image.tmdb.org/t/p/w500/r2517Vz9EhDhj88qwbDVj8DCRZN.jpg"/>   
         </div>
     
-</main>
+        <div id= "trailer">
+            trailer
+        <!--<iframe width="100%" height="100%" src="https://www.youtube.com/embed/LPjoUohkP5c";/>-->   
+        </div>
+     
+
+
+    <div id= "movieInfo" class= "movieInfo" >
+        <p id= "p">Movie Info:</p>
+        <ul class="tabs">
+            <li><a href="#tab1">yes</a></li>
+            <li><a href="#tab2">maybe</a></li>
+            <li><a href="#tab3">not now </a></li>
+        </ul>
+    </div>
+
+    <footer> footer</footer>
+</div>     
+
+
+        
+    
+
+
+<!-- flex justify-center-->
+
+      <!--<section class= "box grid grid-cols-3 gap-4">-->
+   
+
 
 </body>
 </html>

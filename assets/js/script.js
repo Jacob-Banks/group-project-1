@@ -1,17 +1,24 @@
-let movie, which, title, whichMovie, movieCheck, page, movieValue;
+let movie,
+  which,
+  title,
+  whichMovie,
+  movieCheck,
+  page,
+  thisPageIS,
+  movieValue,
+  movedLi;
 let yesArr = [];
 let userHasSeenArr = [];
 let maybeArr = [];
 let notNowArr = [];
 //let btn = document.getElementById("launch");
-let thisPageIS;
 
 //array items will be pages that the user has viewed all 20 movies that page responds with
 let notThesePages = [];
 
 let possiblePages = 1;
 
-function pickMovie() {
+function pickMovie(genres) {
   page = Math.ceil(Math.random() * possiblePages); // there is no page 0
   //genre is a id number ie drama has a id of '18'---> id is string
   console.log(page + " page");
@@ -22,7 +29,7 @@ function pickMovie() {
 
   fetch(
     //sort all movies by vote count in provided genres on this page.. api only allows 1 page with 20 results per fetch
-    `http://api.themoviedb.org/3/discover/movie?api_key=eb7b39196026d99a9bb9dd30201f9b64&sort_by=vote_count.desc&with_genres=18&page=${page}`
+    `http://api.themoviedb.org/3/discover/movie?api_key=eb7b39196026d99a9bb9dd30201f9b64&sort_by=vote_count.desc&with_genres=${genres}&page=${page}`
   )
     .then((value) => value.json())
     .then((value) => {
@@ -57,7 +64,7 @@ function checkMovie() {
       " items in user has seen array " +
       page
   );
-  if (seen > 18) {
+  if (seen >= 19) {
     console.log("page full");
     possiblePages++;
     notThesePages.push(thisPageIS);
@@ -124,108 +131,3 @@ function getMovieInfo(movie) {
       `;
     });
 }
-
-$(document).ready(function () {
-  $("ul.tabs a").click(function () {
-    $(".pane div").hide();
-    $($(this).attr("href")).show();
-    return false;
-  });
-});
-function fillList() {
-  $("#tab1").html(" ");
-  $("#tab2").html(" ");
-  $("#tab3").html(" ");
-  for (item in yesArr) {
-    $("#tab1").append(`<p>${yesArr[item]}</p>`);
-  }
-  for (item in maybeArr) {
-    $("#tab2").append(`<p>${maybeArr[item]}</p>`);
-  }
-  for (item in notNowArr) {
-    $("#tab3").append(`<p>${notNowArr[item]}</p>`);
-  }
-}
-function setList() {
-  title = document.getElementById("title").textContent;
-
-  // console.log(title + " " + which);
-
-  if (which == "yes") {
-    yesArr.push(title);
-  }
-  if (which == "maybe") {
-    maybeArr.push(title);
-  }
-  if (which == "notNow") {
-    notNowArr.push(title);
-  }
-  userHasSeenArr.push(movie);
-  // console.log(
-  //   yesArr +
-  //     " are in yes " +
-  //     maybeARR +
-  //     " are in maybe " +
-  //     notnowARR +
-  //     " are in notnow "
-  // );
-  fillList();
-  pickMovie();
-  //pickMovie(userGenre);
-}
-
-$("#yes").on("click", function () {
-  which = $(this).attr("id");
-  setList();
-});
-$("#maybe").on("click", function () {
-  which = $(this).attr("id");
-  setList();
-});
-$("#notNow").on("click", function () {
-  which = $(this).attr("id");
-  setList();
-});
-$("#no").on("click", function () {
-  which = $(this).attr("id");
-  setList();
-});
-
-pickMovie();
-
-//var userGenre = document.getElementById("genre").value;
-//btn.addEventListener("click", () => pickMovie(userGenre));
-// $.ajax({
-//   url: "https://geolocation-db.com/jsonp",
-//   jsonpCallback: "callback",
-//   dataType: "jsonp",
-//   success: function (location) {
-//     //console.log(location);
-//     city = location.city;
-//     lat = location.latitude;
-//     lon = location.longitude;
-//   }, // if cant find user location
-//   error: function () {
-//     currentForecast("Paris");
-//   },
-// });
-// });
-// / 0: {id: 28, name: "Action"}
-// 1: {id: 12, name: "Adventure"}
-// 2: {id: 16, name: "Animation"}
-// 3: {id: 35, name: "Comedy"}
-// 4: {id: 80, name: "Crime"}
-// 5: {id: 99, name: "Documentary"}
-// 6: {id: 18, name: "Drama"}
-// 7: {id: 10751, name: "Family"}
-// 8: {id: 14, name: "Fantasy"}
-// 9: {id: 36, name: "History"}
-// 10: {id: 27, name: "Horror"}
-// 11: {id: 10402, name: "Music"}
-// 12: {id: 9648, name: "Mystery"}
-// 13: {id: 10749, name: "Romance"}
-// 14: {id: 878, name: "Science Fiction"}
-// 15: {id: 10770, name: "TV Movie"}
-// 16: {id: 53, name: "Thriller"}
-// 17: {id: 10752, name: "War"}
-// 18: {id: 37, name: "Western"}//

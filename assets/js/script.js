@@ -15,8 +15,12 @@ let possiblePages = 1;
 const key = "&appid=7f412d4278c03b3c06e49f9a1ebebf0b";
 // call current weather conditions
 const oneCall = "https://api.openweathermap.org/data/2.5/onecall?";
+// call user's current city
+let currentCity = "https://api.openweathermap.org/data/2.5/weather/?q=";
 // call geographic coordinates
-let lat, lon, x, genres, conditions;
+let lat, lon, x, genres, conditions, city;
+
+
 
 // get current conditions
 var currentWeather = function () {
@@ -35,7 +39,7 @@ var currentWeather = function () {
             conditions = "Rain";
           }
           // if condition response is any below, call it ugly
-          if (
+          if ( 
             conditions === "Mist" ||
             conditions === "Smoke" ||
             conditions === "Haze" ||
@@ -152,6 +156,16 @@ var currentWeather = function () {
     }
   );
 };
+
+
+function getCity(city) {
+  
+}
+
+
+
+
+
 
 function pickMovie(genres) {
   page = Math.ceil(Math.random() * possiblePages); // there is no page 0

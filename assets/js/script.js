@@ -2,26 +2,77 @@ let yesA = [];
 let maybeA = [];
 let notNowA = [];
 
-var storedTitle = JSON.parse(localStorage.getItem("yesA"))
-console.log(storedTitle)
 
 
+//updates, refreshes, yes List
+
+function refreshTitles(){
+    var titles =$("#yesList");
+    titles.empty();
+    var storedTitle = JSON.parse(localStorage.getItem("yesA"));
+    if(storedTitle != null){
+      for(var i = 0; i< storedTitle.length; i++){
+        var title = storedTitle[i];
+        titles.append("<p>"+title+"</p>");
+      }
+    }
+  };
+
+  function refreshTitlesM(){
+    var titlesM =$("#maybeList");
+    titlesM.empty();
+    var storedTitleM = JSON.parse(localStorage.getItem("maybeA"));
+    if(storedTitleM != null){
+      for(var i = 0; i< storedTitleM.length; i++){
+        var titleM = storedTitleM[i];
+        titlesM.append("<p>"+titleM+"</p>");
+      }
+    }
+  };
+
+  function refreshTitlesN(){
+    var titlesN =$("#notList");
+    titlesN.empty();
+    var storedTitleN = JSON.parse(localStorage.getItem("notNowA"));
+    if(storedTitleN != null){
+      for(var i = 0; i< storedTitleN.length; i++){
+        var titleN = storedTitleN[i];
+        titlesN.append("<p>"+titleN+"</p>");
+      }
+    }
+  }
+  
+// title of movie needs something assigned to it
 //clicks push text of title div to array
 //yes button
 $("#yes").click(function (event) {
         event.preventDefault();
-yesA.push($(".title").text());
+yesA.push($("#title").text());
 localStorage.setItem("yesA", JSON.stringify(yesA));
-let yesLi = storedTitle.value;
-console.log(yesLi)
+refreshTitles();
+});
 
+$("#maybe").click(function (event) {
+    event.preventDefault();
+maybeA.push($("#title").text());
+localStorage.setItem("maybeA", JSON.stringify(maybeA));
+refreshTitlesM();
+});
 
-
-
-console.log(yesA)
-console.log($(".title").text())
+$("#notNow").click(function (event) {
+    event.preventDefault();
+notNowA.push($("#title").text());
+localStorage.setItem("notNowA", JSON.stringify(notNowA));
+refreshTitlesN();
 
 });
+
+
+
+
+
+
+
 
 
 

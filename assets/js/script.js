@@ -2,16 +2,53 @@ let yesA = [];
 let maybeA = [];
 let notNowA = [];
 
+var storedTitle = JSON.parse(localStorage.getItem("yesA"))
+console.log(storedTitle)
 
 
 //clicks push text of title div to array
 //yes button
 $("#yes").click(function (event) {
         event.preventDefault();
-yesA.push($(".title").text())
+yesA.push($(".title").text());
+localStorage.setItem("yesA", JSON.stringify(yesA));
+let yesLi = storedTitle.value;
+console.log(yesLi)
+
+
+
 
 console.log(yesA)
-console.log($(".title").text())});
+console.log($(".title").text())
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //maybe button
 $("#maybe").click(function (event) {

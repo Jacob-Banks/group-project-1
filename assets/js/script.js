@@ -7,9 +7,13 @@ let movie,
   thisPageIS,
   movieValue,
   movedLi;
+
+
 let yesA = [];
 let maybeA = [];
 let nowNowA = [];
+
+
 let userHasSeenArr = [];
 //array items will be pages that the user has viewed all 20 movies that page responds with
 let notThesePages = [];
@@ -349,4 +353,6 @@ $("#notNow").click(function () {
   console.log(notNowA);
   refreshTitles();
   pickMovie(genres);
+  
 });
+

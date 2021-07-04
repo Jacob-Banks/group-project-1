@@ -289,9 +289,30 @@ $(document).ready(function () {
     return false;
   });
 });
-$(".pure-button").on("click", function () {
-  pickMovie(genres);
-});
+
+function refreshTitles() {
+  notNowA = JSON.parse(localStorage.getItem("notNowA"));
+  if (notNowA == null) notNowA = [];
+  maybeA = JSON.parse(localStorage.getItem("maybeA"));
+  if (maybeA == null) maybeA = [];
+  yesA = JSON.parse(localStorage.getItem("yesA"));
+  if (yesA == null) yesA = [];
+  $("#yesMain").html(" ");
+  $("#maybeMain").html(" ");
+  $("#notNowMain").html(" ");
+  for (item in yesA) {
+    $("#yesMain").append(`<li>${yesA[item].film}</li>`);
+  }
+  for (item in maybeA) {
+    $("#maybeMain").append(`<li>${maybeA[item].film}</li>`);
+  }
+  for (item in notNowA) {
+    $("#notNowMain").append(`<li>${notNowA[item].film}</li>`);
+  }
+}
+
+
+
 $.ajax({
   url: "https://geolocation-db.com/jsonp",
   jsonpCallback: "callback",
@@ -336,4 +357,24 @@ $("#notNowMain").droppable({
   drop: function (event, ui) {
     ui.draggable.detach().appendTo("#tab3");
   },
+});
+
+$("#yes").click(function () {
+  yesA.push({ film: `${title}`, id: `${movie}` });
+  localStorage.setItem("yesA", JSON.stringify(yesA));
+  refreshTitles();
+  pickMovie(genres);
+});
+$("#maybe").click(function () {
+  maybeA.push({ film: `${title}`, id: `${movie}` });
+  localStorage.setItem("maybeA", JSON.stringify(maybeA));
+  refreshTitles();
+  pickMovie(genres);
+});
+$("#notNow").click(function () {
+  notNowA.push({ film: `${title}`, id: `${movie}` });
+  localStorage.setItem("notNowA", JSON.stringify(notNowA));
+  console.log(notNowA);
+  refreshTitles();
+  pickMovie(genres);
 });

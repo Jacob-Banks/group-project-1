@@ -15,10 +15,10 @@ let possiblePages = 1;
 const key = "&appid=7f412d4278c03b3c06e49f9a1ebebf0b";
 // call current weather conditions
 const oneCall = "https://api.openweathermap.org/data/2.5/onecall?";
-// call user's current city
-let currentCity = "https://api.openweathermap.org/data/2.5/weather/?q=";
+// reverse geocoding to get city name for modal window
+let userLocation = "http://api.openweathermap.org/geo/1.0/reverse?";
 // call geographic coordinates
-let lat, lon, x, genres, conditions, city;
+let lat, lon, x, genres, conditions, limit;
 
 
 
@@ -158,9 +158,35 @@ var currentWeather = function () {
 };
 
 
-function getCity(city) {
-  
+
+
+
+// get current cinditions and reverse geocode city name for modal window
+var getUserLocation = function() {
+  fetch(userLocation + "&lat" + lat + "&lon" + lon + "&limit" + limit + key).then(
+    function (response) {
+      if (response.ok) {
+        response.json().then(function(data) {
+          // get coordinates and city name
+          city = data.name
+          temp = data.current.temp
+          conditions = data.current.weather[0].description
+          console.log(data)
+
+        })
+      }
+    }
+  )
 }
+
+
+
+// render city & conditions in modal window
+function populateIntroModal() {
+
+}
+
+
 
 
 
@@ -302,3 +328,5 @@ $.ajax({
     console.log("error");
   },
 });
+
+

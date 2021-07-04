@@ -13,22 +13,16 @@
 </head>
 
 <!-- display INTRO MODAL on page load-->
-<div class="modal" id="modal-one" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-header">
-             <h2>Hi there!</h2>
- <a href="#modal-one" class="btn-close" aria-hidden="true">×</a>
-
-        </div>
-        <div class="modal-body" id="modal-one-text">
-            <p></p>
-        </div>
-        <div class="modal-footer"> <a href="#modal-one" class="btn">Ok!</a>
-
+<div id="modal-1" class="modal animate-opacity">
+    <div class="modal-content">
+        <div class="modal-inner">
+            <span onclick="document.getElementById('modal-1').style.display='none'" class="modal-close">&times;</span>
+            <h4>Welcome!</h4>
+            <div id="modal-text"></div>
+            <p>Close this window to start!</p>
         </div>
     </div>
 </div>
-<div class="wrap"> <a href="#" class="btn btn-big">Modal!</a>
 <!--END OF INTRO MODAL-->
 
 </div>

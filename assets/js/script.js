@@ -6,22 +6,27 @@ let movie,
   page,
   thisPageIS,
   movieValue,
-  movedLi;
-
+  whereToWatch,
+  lat,
+  lon,
+  x,
+  genres,
+  conditions;
+let userHasSeenArr = [];
+let notNowA = [];
 let yesA = [];
 let maybeA = [];
-let nowNowA = [];
-
-let userHasSeenArr = [];
+var optionTexts = [];
+var optionTextsY = [];
+var optionTextsN = [];
 //array items will be pages that the user has viewed all 20 movies that page responds with
 let notThesePages = [];
-let possiblePages = 1;
+let possiblePages = 5;
 // openweather api key
 const key = "&appid=7f412d4278c03b3c06e49f9a1ebebf0b";
 // call current weather conditions
 const oneCall = "https://api.openweathermap.org/data/2.5/onecall?";
 // call geographic coordinates
-let lat, lon, x, genres, conditions;
 
 // get current conditions
 var currentWeather = function () {
@@ -32,7 +37,7 @@ var currentWeather = function () {
           // get coordinates
           temp = data.current.temp;
           conditions = data.current.weather[0].main;
-          console.log(data);
+          //console.log(data);
 
           ///// CONSOLIDATE CONDITION CODES
           // if condition response is drizzle, we call it rain
@@ -85,11 +90,11 @@ var currentWeather = function () {
 
           // if sunny and between 0-20 degree, suggest ____ genres
           if (conditions === "Clear" && temp > 0 && temp <= 20) {
-            genres = "10751,27,10752,37";
+            genres = "18";
           }
           // if cloudy/rainy and between 0-20 degrees, suggest ____ genres
           if (conditions === "Clouds" && temp > 0 && temp <= 20) {
-            genres = "9648,27,80";
+            genres = "27";
           }
           // is ugly and between 0-20 degrees, suggest _____ genres
           if (conditions === "Ugly" && temp > 0 && temp <= 20) {
@@ -161,12 +166,11 @@ var currentWeather = function () {
 function pickMovie(genres) {
   page = Math.ceil(Math.random() * possiblePages); // there is no page 0
   //genre is a id number ie drama has a id of '18'---> id is string
-  console.log(page + " page");
+
   //set the page that the api will resspond with 20 movies
   while (notThesePages.includes(page)) {
     page = Math.ceil(Math.random() * possiblePages);
   }
-  console.log(page + " " + genres);
 
   fetch(
     //sort all movies by vote count in provided genres on this page.. api only allows 1 page with 20 results per fetch
@@ -174,8 +178,6 @@ function pickMovie(genres) {
   )
     .then((value) => value.json())
     .then((value) => {
-      console.log(value);
-
       movieValue = value;
       //get which page this is
       thisPageIS = value.page;
@@ -225,7 +227,8 @@ function getMovieInfo(movie) {
   )
     .then((value) => value.json())
     .then((value) => {
-      // console.log(value);
+      console.log(value);
+      logit = value;
       let cast = [];
       for (let i = 0; i < 6; i++) {
         cast.push(value.credits.cast[i].name);
@@ -242,64 +245,85 @@ function getMovieInfo(movie) {
         youtubeKey = value.videos.results[0].key;
       }
       const link = `https://www.youtube.com/embed/${youtubeKey}`;
+      document.getElementById("iframe").src = link;
       const posterPath = value.poster_path;
-      const youtube = document.getElementById("trailer");
 
       const description = value.overview;
-       title = value.title;
+      title = value.title;
 
-      let logo;
-      const whereToWatch = value["watch/providers"].results.CA;
+      let logoS;
+
+      whereToWatch = value["watch/providers"].results.CA;
+
       if (!("flatrate" in whereToWatch)) {
-        logo = value["watch/providers"].results.CA.rent[0].logo_path;
+        $("#stream").html(" ");
+        $("#stream").html("Sorry can't find a Stream");
       } else {
-        logo = value["watch/providers"].results.CA.flatrate[0].logo_path;
+        $("#stream").html(" ");
+        value["watch/providers"].results["CA"].flatrate.forEach((element) => {
+          logoS = element.logo_path;
+          console.log[element];
+
+          $("#stream").append(
+            `<img src="https://image.tmdb.org/t/p/w45/${logoS}"/>`
+          );
+        });
       }
 
-      // <ul>
-      //   <li>${cast[0]}</li>
-      //   <li>${cast[1]}</li>
-      //   <li>${cast[2]}</li>
-      //   <li>${cast[3]}</li>
-      //   <li>${cast[4]}</li>
-      //  </ul>
+      if (!("rent" in whereToWatch)) {
+        $("#rent").html(" ");
+        $("#rent").html("Sorry can't find a Stream");
+      } else {
+        $("#rent").html(" ");
+        value["watch/providers"].results["CA"].rent.forEach((element) => {
+          logoS = element.logo_path;
+          console.log[element];
 
-      youtube.innerHTML = `<iframe width="520" height="600"  src=${link}></iframe>`;
+          $("#rent").append(
+            `<img src="https://image.tmdb.org/t/p/w45/${logoS}"/>`
+          );
+        });
+      }
+      if (!("buy" in whereToWatch)) {
+        $("#buy").html(" ");
+        $("#buy").html("Sorry can't find a Stream");
+      } else {
+        $("#buy").html(" ");
+        value["watch/providers"].results["CA"].buy.forEach((element) => {
+          logoS = element.logo_path;
+          console.log[element];
+
+          $("#buy").append(
+            `<img src="https://image.tmdb.org/t/p/w45/${logoS}"/>`
+          );
+        });
+      }
+
+      $("#cast").html(`
+      <p> Made With</p>
+        <ul class="cast">
+          <li>${cast[0]}</li>
+          <li>${cast[1]}</li>
+          <li>${cast[2]}</li>
+          <li>${cast[3]}</li>
+          <li>${cast[4]}</li>
+        </ul>
+      `);
 
       $("#poster").html(`
       <img class = "pure-img" src="http://image.tmdb.org/t/p/w400/${posterPath}" />`);
-      $("#movieInfo").html(`
-        <h2 id="title">${title}</h2>
-          <p>${description}</p>
-        <h3>where to watch:</h3>
-          <img src="http://image.tmdb.org/t/p/original/${logo}"/>
-      `);
+      $("#movieTitle").html(title);
+      $("#description").html(description);
     });
 }
-
-
-$(document).ready(function () {
-  $("ul.tabs a").click(function () {
-    $(".pane div").hide();
-    $($(this).attr("href")).show();
-    return false;
-  });
-});
-
-// display current
-$(document).ready(function () {
-  $("ul.tabs a").click(function () {
-    $(".pane div").hide();
-    $($(this).attr("href")).show();
-    return false;
-  });
-});
 
 function refreshTitles() {
   notNowA = JSON.parse(localStorage.getItem("notNowA"));
   if (notNowA == null) notNowA = [];
+
   maybeA = JSON.parse(localStorage.getItem("maybeA"));
   if (maybeA == null) maybeA = [];
+
   yesA = JSON.parse(localStorage.getItem("yesA"));
   if (yesA == null) yesA = [];
   $("#yesMain").html(" ");
@@ -315,8 +339,34 @@ function refreshTitles() {
     $("#notNowMain").append(`<li>${notNowA[item].film}</li>`);
   }
 }
+$(".movieList").sortable({
+  connectWith: $(".movieList"),
+  scroll: false,
+  tolerance: "pointer",
+  helper: "clone",
 
+  // stop: function (event) {
+  //   $("#maybeMain li").each(function () {
+  //     optionTexts.push($(this).text());
+  //   });
+  //   $("#yesMain li").each(function () {
+  //     optionTextsY.push($(this).text());
+  //   });
+  //   $("#notNowMain li").each(function () {
+  //     optionTextsN.push($(this).text());
+  //   });
+  //   console.log(optionTextsY, optionTexts, optionTextsN);
+  // new ul now swapped into saved array
+  // },
 
+  // update: function (event) {
+  //   // loop over current set of children in sortable list
+  //   console.log(this);
+  //   changedList = this;
+  //   x = this.childElementCount;
+  //   console.log(this);
+});
+refreshTitles();
 
 $.ajax({
   url: "https://geolocation-db.com/jsonp",
@@ -326,56 +376,26 @@ $.ajax({
     lat = location.latitude;
     lon = location.longitude;
     currentWeather();
-    console.log("got lat lon");
-  }, // if cant find user location
+    // console.log("got lat lon");
+  }, // if cant find user locationt
   error: function () {
     console.log("error");
   },
 });
-
-$(".pane p").draggable({
-  helper: "clone",
-  containment: "document",
-  start: function () {
-    movedLi = this.innerText;
-    console.log(movedLi);
-  },
-  stop: function () {
-    movedLi = "";
-    console.log(movedLi);
-  },
-});
-$("#yesMain").droppable({
-  tolerance: "pointer",
-  drop: function (event, ui) {
-    ui.draggable.detach().appendTo("#tab1");
-  },
-});
-$("#maybeMain").droppable({
-  tolerance: "pointer",
-  drop: function (event, ui) {
-    ui.draggable.detach().appendTo("#tab2");
-  },
-});
-$("#notNowMain").droppable({
-  tolerance: "pointer",
-  drop: function (event, ui) {
-    ui.draggable.detach().appendTo("#tab3");
-  },
-});
-
 $("#yes").click(function () {
   yesA.push({ film: `${title}`, id: `${movie}` });
   localStorage.setItem("yesA", JSON.stringify(yesA));
   refreshTitles();
   pickMovie(genres);
 });
+
 $("#maybe").click(function () {
   maybeA.push({ film: `${title}`, id: `${movie}` });
   localStorage.setItem("maybeA", JSON.stringify(maybeA));
   refreshTitles();
   pickMovie(genres);
 });
+
 $("#notNow").click(function () {
   notNowA.push({ film: `${title}`, id: `${movie}` });
   localStorage.setItem("notNowA", JSON.stringify(notNowA));

@@ -29,7 +29,6 @@ const key = "&appid=7f412d4278c03b3c06e49f9a1ebebf0b";
 const oneCall = "https://api.openweathermap.org/data/2.5/onecall?";
 // call geographic coordinates
 
-
 // get current conditions
 var currentWeather = function () {
   fetch(oneCall + "&lat=" + lat + "&lon=" + lon + "&units=metric" + key).then(
@@ -168,8 +167,7 @@ function pickMovie(genres) {
     page = Math.ceil(Math.random() * possiblePages);
   }
 
-
-// console.log(page + " " + genres);
+  // console.log(page + " " + genres);
 
   fetch(
     //sort all movies by vote count in provided genres on this page.. api only allows 1 page with 20 results per fetch
@@ -177,7 +175,7 @@ function pickMovie(genres) {
   )
     .then((value) => value.json())
     .then((value) => {
-     // console.log(value);
+      // console.log(value);
 
       movieValue = value;
       //get which page this is
@@ -241,8 +239,6 @@ function getMovieInfo(movie) {
       const link = `https://www.youtube.com/embed/${youtubeKey}`;
       document.getElementById("iframe").src = link;
       const posterPath = value.poster_path;
-      
-      
 
       if (!("flatrate" in whereToWatch)) {
         $("#stream").html(" ");
@@ -298,7 +294,6 @@ function getMovieInfo(movie) {
           <li>${cast[4]}</li>
         </ul>
       `);
-
 
       $("#poster").html(`
       <img class = "pure-img" src="http://image.tmdb.org/t/p/w400/${posterPath}" />`);
@@ -359,7 +354,6 @@ $(".movieList").sortable({
 });
 refreshTitles();
 
-
 $.ajax({
   url: "https://geolocation-db.com/jsonp",
   jsonpCallback: "callback",
@@ -374,7 +368,6 @@ $.ajax({
     console.log("error");
   },
 });
-
 
 $("#yes").click(function () {
   yesA.push({ film: `${title}`, id: `${movie}` });
@@ -396,6 +389,4 @@ $("#notNow").click(function () {
   console.log(notNowA);
   refreshTitles();
   pickMovie(genres);
-  
 });
-

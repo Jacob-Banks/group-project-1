@@ -15,70 +15,110 @@
 </head>
 
 <body>
-
-
     <header id="header">
         <h1 id="titleMain">Watch</h1>
     </header>
 
-
-
     <main>
-        <!--Aside elements: "search bar", "explanation of the movie" and "my List"-->
+
         <aside id="aside" class="pure-g">
-            <!-- <div id="search">
-                <input type="text" id="searchArea" class="border-4 border-blue-500 border-opacity-100"></input>
-                <p class="enterCity">Enter your city</p>
-            </div> -->
-            <div class="pure-u-6-24">
-            <!--<section id="explanation">
-                <p>Explanation:
-                    
-                    
-                </p>
-            </section>-->
 
-            <section id="myList">
-                <p>My List:</p>
-                <ul class="tabs">
-                    <li id="yesMain"><a href="#tab1">yes</a></li>
-                    <li id="maybeMain"><a href="#tab2">maybe</a></li>
-                    <li id="notNowMain"><a href="#tab3">not today</a></li>
-                </ul>
-                <div class="pane">
-                    <div id="tab1">
-                        <p>H</p>
-                    </div>
-                    <div id="tab2" style="display:none;">
-                        <p>A</p>
-                    </div>
-                    
-                    <div id="tab3" style="display:none;">
-                        <p>Z</p>
-                    </div>
-                
-            </section>
-        </div>
-        <div id="poster" class="pure-u-1-3"></div>
-        <div id="trailer" class="pure-u-1-3"></div>
-        </aside>
-
-
-        <!-- part where you'll find the poster of the movie, trailer and movie info-->
-        <div class="pure-g">
-
-        <div id="movieInfo" class ="pure-u-1-1">
-            </div> 
-            <div class="choices">
-                
-                <button class="pure-button">Yes</button>
-                <button class="pure-button">Maybe</button>
-                <button class="pure-button">Not today</button>
-                <button class="pure-button">No</button>
 
             </div>
+            <div id="poster" class="pure-u-11-24"></div>
+            <div id="trailer" class="pure-u-12-24">
+                <div class="iframe-container">
+                    <iframe id="iframe" src="https://www.youtube.com/embed/mB1dE0FotdY" width="100%" frameborder="0"
+                        title="Responsive iframe" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+                <p id="cast"></p>
+            </div>
+        </aside>
+        </div>
+
+        <!-- part where you'll find the poster of the movie, trailer and movie info-->
+        <div class="choices">
+
+            <button id="yes" class="pure-button">Yes</button>
+            <button id="maybe" class="pure-button">Maybe</button>
+            <button id="notNow" class="pure-button">Not today</button>
+            <button id="no" class="pure-button">No</button>
 
         </div>
+
+        <div class="pure-g">
+
+            <div id="movieInfo" class="pure-u-1-1">
+                <h2 id="movieTitle"></h2>
+
+            </div>
+        </div>
+        <p id="description"></p>
+        <div class="pure-g">
+
+            <div class="pure-u-1-3">
+                <h3>where to stream:</h3>
+                <div id="stream"></div>
+            </div>
+
+            <div class="pure-u-1-3">
+                <h3>where to rent:</h3>
+                <div id="rent"></div>
+            </div>
+
+            <div class="pure-u-1-3">
+                <h3>where to buy:</h3>
+                <div id="buy"></div>
+            </div>
+
+
+        </div>
+
+        <div class="pure-g">
+            <div class="pure-u-1-3">
+                <section class="myList">
+                    <h4>Definitly:</h4>
+                    <ul class="movieList" id="yesMain">
+                        <li>H</li>
+                        <li>H</li>
+                        <li>H</li>
+                        <li>H</li>
+                        <li>H</li>
+                        <li>H</li>
+                    </ul>
+                </section>
+            </div>
+            <div class="pure-u-1-3">
+                <section class="myList middle">
+                    <h4>maybe:</h4>
+                    <ul class="movieList" id="maybeMain">
+                        <li>H</li>
+                        <li>H</li>
+                        <li>H</li>
+                        <li>H</li>
+                        <li>H</li>
+                        <li>H</li>
+                        <li>H</li>
+                    </ul>
+                </section>
+            </div>
+            <div class="pure-u-1-3">
+                <section class="myList">
+                    <h4>not today:</h4>
+                    <ul class="movieList" id="notNowMain">
+                        <li>Z</li>
+                        <li>Z</li>
+                        <li>Z</li>
+                        <li>Z</li>
+                        <li>Z</li>
+                        <li>Z</li>
+                        <li>Z</li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+
 
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

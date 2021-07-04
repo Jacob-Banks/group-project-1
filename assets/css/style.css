@@ -1,14 +1,15 @@
-
-html{
+html {
   background-image: linear-gradient(to right, darkgray, gray);
 }
-
-#header{
-    background-image: linear-gradient(to right, gray, black);
-    height: 50px;
-    color: white;
-    display: flex;
-    justify-content: center;
+body {
+  margin: 0 5%;
+}
+#header {
+  background-image: linear-gradient(to right, gray, black);
+  height: 50px;
+  color: white;
+  display: flex;
+  justify-content: center;
 }
 #titleMain {
   margin-top: 0px;
@@ -16,117 +17,98 @@ html{
   font: 200;
   color: black;
   padding: 4px;
-  background-color: #f5C518;
+  background-color: #f5c518;
   border-radius: 0.1cm;
   height: 40px;
 }
 
-#title { 
+#movieTitle {
   margin-top: 0px;
   font-size: 30px;
   font: 200;
   color: black;
   padding: 4px;
-  background-image:linear-gradient(to right,#f5C518, black);
+  background-image: linear-gradient(to right, #f5c518, black);
   border-radius: 0.1cm;
   height: 40px;
 }
-
 #aside {
-  padding: 10px;
-
-  margin-right: 50px;
+  margin-top: 5px;
 }
-
-#search {
-}
-
-.enterCity {
-  font-weight: 100;
-}
-
-#explanation {
-    margin-top: 10px;
-    margin-left: 1px;
-    height: 200px;
-    border-style: outset;
-    background-image: linear-gradient(to right,#f5C518, black);
-    border: black;
-    border-style: solid;
-    
-}
-#explanation p {
-  margin-left: 5px;
+.myList {
   text-align: center;
+  margin: 3px;
+  background-image: linear-gradient(to right, #f5c518, black);
 }
 
-#myList {
-  text-align: center;
-   margin-top: 10px;
-   height: 400px;
-   background-image: linear-gradient(to right,#f5C518, black);
-}
-#myList p {
-  margin-left: 5px;
+h4 {
+  margin: 0 0 0 0;
 }
 
-#poster {
-  margin: 0 10px;
-
-  right: 0px;
+.iframe-container {
+  overflow: hidden;
+  /* 16:9 aspect ratio */
+  padding-top: 56.25%;
+  position: relative;
 }
-
-ul.tabs {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-
-  }
-  ul.tabs > li {
-    float: left;
-    margin: 0 25px;
-    padding: 10px;
-    background-color: lightgray;
-  }
-  ul.tabs > li:hover {
-    background-color: black;
-    color: white;
-  }
-  ul.tabs > li.selected {
-    background-color: lightgray;
-  }
-  ul {
-    overflow: auto;
-  }
-
+.iframe-container iframe {
+  border: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.cast {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 .choices {
   display: flex;
-  justify-content: end;
-  padding: 2px;
-  margin: 2px;
-
+  justify-content: center;
 }
+
 .pure-button {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  background: #f5C518;
+  background: #f5c518;
+  padding: 10px;
+  margin: 10px;
+  border: black solid 1px;
 }
 
 .pure-button:hover {
   background: black;
-  color: #f5C518;
+  color: #f5c518;
 }
 
 #poster img {
-  height: 600px;
-  width: 520;
-}
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 
+  width: auto;
+}
+#trailer {
+  margin-left: 6px;
+}
 #movieInfo {
-    font-size: 30px;
+  margin: 5px 0;
+  font-size: 30px;
 }
-
-#movieInfo h3 {
+#movieInfo p {
+  font-size: 18px;
+}
+#movieInfo h2,
+h3 {
+  margin: 5px 0;
   display: block;
   text-align: center;
 }
-
+#yesMain,
+#notNowMain,
+#maybeMain {
+  list-style: none;
+  padding: 0;
+  margin-top: 3px;
+  color: azure;

@@ -19,6 +19,7 @@ let maybeA = [];
 var optionTexts = [];
 var optionTextsY = [];
 var optionTextsN = [];
+
 //array items will be pages that the user has viewed all 20 movies that page responds with
 let notThesePages = [];
 let possiblePages = 5;
@@ -27,6 +28,7 @@ const key = "&appid=7f412d4278c03b3c06e49f9a1ebebf0b";
 // call current weather conditions
 const oneCall = "https://api.openweathermap.org/data/2.5/onecall?";
 // call geographic coordinates
+
 
 // get current conditions
 var currentWeather = function () {
@@ -61,7 +63,6 @@ var currentWeather = function () {
           if (conditions === "Sunny") {
             cinditions = "Clear";
           }
-
           ///// LINKING CONDITION WITH MOVIE GENRES
           // if sunny and below 0 degrees, suggest ____ genres
           if (conditions === "Clear" && temp < 0) {
@@ -87,7 +88,6 @@ var currentWeather = function () {
           if (conditions === "Snow" && temp > 0) {
             genres = "36,14,35,16";
           }
-
           // if sunny and between 0-20 degree, suggest ____ genres
           if (conditions === "Clear" && temp > 0 && temp <= 20) {
             genres = "18";
@@ -112,7 +112,6 @@ var currentWeather = function () {
           if (conditions === "Snow" && temp > 0 && temp <= 20) {
             genres = "10770,14,80";
           }
-
           // if sunny and 21-30 degrees, suggest _____ genres
           if (conditions === "Clear" && temp > 20 && temp <= 30) {
             genres = "35,10402,10751,";
@@ -133,7 +132,6 @@ var currentWeather = function () {
           if (conditions === "Thunderstorm" && temp > 20 && temp <= 30) {
             genres = "28,12,27,10770";
           }
-
           // if sunny and 30+ degrees, suggest _____ genres
           if (conditions === "Clear" && temp >= 30) {
             genres = "35,16,10751,14,10402,10770";
@@ -154,7 +152,6 @@ var currentWeather = function () {
           if (conditions === "Thunderstorm" && temp >= 30) {
             genres = "27,35,14,18,80";
           }
-
           console.log(genres);
           pickMovie(genres);
         });
@@ -162,7 +159,6 @@ var currentWeather = function () {
     }
   );
 };
-
 function pickMovie(genres) {
   page = Math.ceil(Math.random() * possiblePages); // there is no page 0
   //genre is a id number ie drama has a id of '18'---> id is string
@@ -172,22 +168,24 @@ function pickMovie(genres) {
     page = Math.ceil(Math.random() * possiblePages);
   }
 
+
+// console.log(page + " " + genres);
+
   fetch(
     //sort all movies by vote count in provided genres on this page.. api only allows 1 page with 20 results per fetch
     `https://api.themoviedb.org/3/discover/movie?api_key=eb7b39196026d99a9bb9dd30201f9b64&sort_by=vote_count.desc&with_genres=${genres}&page=${page}`
   )
     .then((value) => value.json())
     .then((value) => {
+     // console.log(value);
+
       movieValue = value;
       //get which page this is
       thisPageIS = value.page;
-
       //pick a random movie from this page  20 options
       whichMovie = Math.floor(Math.random() * 20);
       movie = value.results[whichMovie].id;
-
       //check if user has seen this movie
-
       // if (userHasSeenArr.includes(movie)) {
       //   checkMovie();
       // } else {
@@ -212,13 +210,11 @@ function pickMovie(genres) {
 //     console.log("page full");
 //     possiblePages++;
 //     notThesePages.push(thisPageIS);
-
 //     pickMovie();
 //   } else {
 //     pickMovie();
 //   }
 // }
-
 function getMovieInfo(movie) {
   fetch(
     "https://api.themoviedb.org/3/movie/" +
@@ -233,27 +229,20 @@ function getMovieInfo(movie) {
       for (let i = 0; i < 6; i++) {
         cast.push(value.credits.cast[i].name);
       }
-
       let youtubeKey = "";
       value.videos.results.forEach((element) => {
         if (element.type === "Trailer") {
           youtubeKey = element.key;
         }
       });
-
       if (!youtubeKey) {
         youtubeKey = value.videos.results[0].key;
       }
       const link = `https://www.youtube.com/embed/${youtubeKey}`;
       document.getElementById("iframe").src = link;
       const posterPath = value.poster_path;
-
-      const description = value.overview;
-      title = value.title;
-
-      let logoS;
-
-      whereToWatch = value["watch/providers"].results.CA;
+      
+      
 
       if (!("flatrate" in whereToWatch)) {
         $("#stream").html(" ");
@@ -310,6 +299,7 @@ function getMovieInfo(movie) {
         </ul>
       `);
 
+
       $("#poster").html(`
       <img class = "pure-img" src="http://image.tmdb.org/t/p/w400/${posterPath}" />`);
       $("#movieTitle").html(title);
@@ -339,6 +329,7 @@ function refreshTitles() {
     $("#notNowMain").append(`<li>${notNowA[item].film}</li>`);
   }
 }
+
 $(".movieList").sortable({
   connectWith: $(".movieList"),
   scroll: false,
@@ -368,6 +359,7 @@ $(".movieList").sortable({
 });
 refreshTitles();
 
+
 $.ajax({
   url: "https://geolocation-db.com/jsonp",
   jsonpCallback: "callback",
@@ -382,6 +374,8 @@ $.ajax({
     console.log("error");
   },
 });
+
+
 $("#yes").click(function () {
   yesA.push({ film: `${title}`, id: `${movie}` });
   localStorage.setItem("yesA", JSON.stringify(yesA));
@@ -402,4 +396,6 @@ $("#notNow").click(function () {
   console.log(notNowA);
   refreshTitles();
   pickMovie(genres);
+  
 });
+

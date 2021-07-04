@@ -259,7 +259,7 @@ function getMovieInfo(movie) {
       //   <li>${cast[4]}</li>
       //  </ul>
 
-      youtube.innerHTML = `<iframe width="320" height="315"  src=${link}></iframe>`;
+      youtube.innerHTML = `<iframe width="520" height="600"  src=${link}></iframe>`;
 
       $("#poster").append(`
       <img src="http://image.tmdb.org/t/p/w400/${posterPath}" />`);
@@ -271,6 +271,15 @@ function getMovieInfo(movie) {
       `);
     });
 }
+
+
+$(document).ready(function () {
+  $("ul.tabs a").click(function () {
+    $(".pane div").hide();
+    $($(this).attr("href")).show();
+    return false;
+  });
+});
 
 // display current
 

@@ -1,18 +1,35 @@
-#header{
-    background-color: blue;
-    height: 125px;
-    color: white;
- 
-    
-    
+
+html{
+  background-image: linear-gradient(to right, darkgray, gray);
 }
 
-
-#title {
-    
+#header{
+    background-image: linear-gradient(to right, gray, black);
+    height: 50px;
+    color: white;
     display: flex;
     justify-content: center;
-    font-size: 30px;
+}
+#titleMain {
+  margin-top: 0px;
+  font-size: 30px;
+  font: 200;
+  color: black;
+  padding: 4px;
+  background-color: #f5C518;
+  border-radius: 0.1cm;
+  height: 40px;
+}
+
+#title { 
+  margin-top: 0px;
+  font-size: 30px;
+  font: 200;
+  color: black;
+  padding: 4px;
+  background-image:linear-gradient(to right,#f5C518, black);
+  border-radius: 0.1cm;
+  height: 40px;
 }
 
 #aside {
@@ -32,17 +49,27 @@
 
 #explanation {
     margin-top: 10px;
+    margin-left: 1px;
     height: 200px;
-    background-color: red;
+    border-style: outset;
+    background-image: linear-gradient(to right,#f5C518, black);
     border: black;
     border-style: solid;
     
 }
+#explanation p {
+  margin-left: 5px;
+  text-align: center;
+}
 
 #myList {
+  text-align: center;
    margin-top: 10px;
    height: 400px;
-   background-color: blue;
+   background-image: linear-gradient(to right,#f5C518, black);
+}
+#myList p {
+  margin-left: 5px;
 }
 
 #poster {
@@ -59,6 +86,7 @@ ul.tabs {
     list-style-type: none;
     margin: 0;
     padding: 0;
+
   }
   ul.tabs > li {
     float: left;
@@ -77,15 +105,29 @@ ul.tabs {
     overflow: auto;
   }
 
+.choices {
+  display: flex;
+  justify-content: end;
+  padding: 2px;
+  margin: 2px;
 
+}
+.pure-button {
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  background: #f5C518;
+}
 
-#trailer {
+.pure-button:hover {
+  background: black;
+  color: #f5C518;
+}
 
+#poster img {
+  height: 600px;
+  width: 520;
 }
 
 #movieInfo {
-    
-    
     font-size: 30px;
 }
 
@@ -94,6 +136,3 @@ ul.tabs {
     text-align: center;
 }
 
-.tabs {
-    width: 1000px;
-}

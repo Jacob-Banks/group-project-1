@@ -246,7 +246,7 @@ function getMovieInfo(movie) {
       const youtube = document.getElementById("trailer");
 
       const description = value.overview;
-      const title = value.title;
+       title = value.title;
 
       let logo;
       const whereToWatch = value["watch/providers"].results.CA;

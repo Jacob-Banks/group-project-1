@@ -165,7 +165,7 @@ function pickMovie(genres) {
 
   fetch(
     //sort all movies by vote count in provided genres on this page.. api only allows 1 page with 20 results per fetch
-    `http://api.themoviedb.org/3/discover/movie?api_key=eb7b39196026d99a9bb9dd30201f9b64&sort_by=vote_count.desc&with_genres=${genres}&page=${page}`
+    `https://api.themoviedb.org/3/discover/movie?api_key=eb7b39196026d99a9bb9dd30201f9b64&sort_by=vote_count.desc&with_genres=${genres}&page=${page}`
   )
     .then((value) => value.json())
     .then((value) => {
@@ -259,10 +259,10 @@ function getMovieInfo(movie) {
       //   <li>${cast[4]}</li>
       //  </ul>
 
-      youtube.innerHTML = `<iframe width="320" height="315"  src=${link}></iframe>`;
+      youtube.innerHTML = `<iframe width="99%" height="55%"  src=${link}></iframe>`;
 
       $("#poster").html(`
-      <img src="http://image.tmdb.org/t/p/w400/${posterPath}" />`);
+      <img class = "pure-img" src="http://image.tmdb.org/t/p/w400/${posterPath}" />`);
       $("#movieInfo").html(`
         <h2 id="title">${title}</h2>
           <p>${description}</p>
@@ -295,5 +295,36 @@ $.ajax({
   }, // if cant find user location
   error: function () {
     console.log("error");
+  },
+});
+
+$(".pane p").draggable({
+  helper: "clone",
+  containment: "document",
+  start: function () {
+    movedLi = this.innerText;
+    console.log(movedLi);
+  },
+  stop: function () {
+    movedLi = "";
+    console.log(movedLi);
+  },
+});
+$("#yesMain").droppable({
+  tolerance: "pointer",
+  drop: function (event, ui) {
+    ui.draggable.detach().appendTo("#tab1");
+  },
+});
+$("#maybeMain").droppable({
+  tolerance: "pointer",
+  drop: function (event, ui) {
+    ui.draggable.detach().appendTo("#tab2");
+  },
+});
+$("#notNowMain").droppable({
+  tolerance: "pointer",
+  drop: function (event, ui) {
+    ui.draggable.detach().appendTo("#tab3");
   },
 });

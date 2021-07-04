@@ -222,7 +222,7 @@ function getMovieInfo(movie) {
     .then((value) => value.json())
     .then((value) => {
       console.log(value);
-      logit = value;
+     
       let cast = [];
       for (let i = 0; i < 6; i++) {
         cast.push(value.credits.cast[i].name);
@@ -236,10 +236,11 @@ function getMovieInfo(movie) {
       if (!youtubeKey) {
         youtubeKey = value.videos.results[0].key;
       }
+    title=value.title;
       const link = `https://www.youtube.com/embed/${youtubeKey}`;
       document.getElementById("iframe").src = link;
       const posterPath = value.poster_path;
-
+      whereToWatch = value["watch/providers"].results.CA;
       if (!("flatrate" in whereToWatch)) {
         $("#stream").html(" ");
         $("#stream").html("Sorry can't find a Stream");
@@ -297,7 +298,8 @@ function getMovieInfo(movie) {
 
       $("#poster").html(`
       <img class = "pure-img" src="http://image.tmdb.org/t/p/w400/${posterPath}" />`);
-      $("#movieTitle").html(title);
+      $("#movie
+        ").html(title);
       $("#description").html(description);
     });
 }

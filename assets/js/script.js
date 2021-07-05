@@ -16,9 +16,9 @@ let userHasSeenArr = [];
 let notNowA = [];
 let yesA = [];
 let maybeA = [];
-var optionTexts = [];
-var optionTextsY = [];
-var optionTextsN = [];
+var tempM = [];
+var tempY = [];
+var tempN = [];
 
 //array items will be pages that the user has viewed all 20 movies that page responds with
 let notThesePages = [];
@@ -151,7 +151,7 @@ var currentWeather = function () {
           if (conditions === "Thunderstorm" && temp >= 30) {
             genres = "27,35,14,18,80";
           }
-          console.log(genres);
+          // console.log(genres);
           pickMovie(genres);
         });
       }
@@ -221,7 +221,7 @@ function getMovieInfo(movie) {
   )
     .then((value) => value.json())
     .then((value) => {
-      console.log(value);
+      // console.log(value);
       logit = value;
       let cast = [];
       for (let i = 0; i < 6; i++) {
@@ -248,7 +248,7 @@ function getMovieInfo(movie) {
         $("#stream").html(" ");
         value["watch/providers"].results["CA"].flatrate.forEach((element) => {
           logoS = element.logo_path;
-          console.log[element];
+          // console.log[element];
 
           $("#stream").append(
             `<img src="https://image.tmdb.org/t/p/w45/${logoS}"/>`
@@ -263,7 +263,7 @@ function getMovieInfo(movie) {
         $("#rent").html(" ");
         value["watch/providers"].results["CA"].rent.forEach((element) => {
           logoS = element.logo_path;
-          console.log[element];
+          //console.log[element];
 
           $("#rent").append(
             `<img src="https://image.tmdb.org/t/p/w45/${logoS}"/>`
@@ -277,7 +277,7 @@ function getMovieInfo(movie) {
         $("#buy").html(" ");
         value["watch/providers"].results["CA"].buy.forEach((element) => {
           logoS = element.logo_path;
-          console.log[element];
+          // console.log[element];
 
           $("#buy").append(
             `<img src="https://image.tmdb.org/t/p/w45/${logoS}"/>`
@@ -315,13 +315,13 @@ function refreshTitles() {
   $("#maybeMain").html(" ");
   $("#notNowMain").html(" ");
   for (item in yesA) {
-    $("#yesMain").append(`<li>${yesA[item].film}</li>`);
+    $("#yesMain").append(`<li>${yesA[item]}</li>`);
   }
   for (item in maybeA) {
-    $("#maybeMain").append(`<li>${maybeA[item].film}</li>`);
+    $("#maybeMain").append(`<li>${maybeA[item]}</li>`);
   }
   for (item in notNowA) {
-    $("#notNowMain").append(`<li>${notNowA[item].film}</li>`);
+    $("#notNowMain").append(`<li>${notNowA[item]}</li>`);
   }
 }
 
@@ -331,29 +331,36 @@ $(".movieList").sortable({
   tolerance: "pointer",
   helper: "clone",
 
-  // stop: function (event) {
-  //   $("#maybeMain li").each(function () {
-  //     optionTexts.push($(this).text());
-  //   });
-  //   $("#yesMain li").each(function () {
-  //     optionTextsY.push($(this).text());
-  //   });
-  //   $("#notNowMain li").each(function () {
-  //     optionTextsN.push($(this).text());
-  //   });
-  //   console.log(optionTextsY, optionTexts, optionTextsN);
-  // new ul now swapped into saved array
-  // },
+  update: function (event) {
+    console.log(yesA, maybeA, notNowA);
+    let tempArr = [];
+    $(this)
+      .children()
+      .each(function () {
+        let text = $(this)[0].innerText.trim();
+        tempArr.push(text);
+      });
+    let arrayName = $(this).attr("id");
+    //console.log(tempArr);
 
-  // update: function (event) {
-  //   // loop over current set of children in sortable list
-  //   console.log(this);
-  //   changedList = this;
-  //   x = this.childElementCount;
-  //   console.log(this);
+    console.log(arrayName);
+
+    if (arrayName === "yesMain") {
+      yesA = tempArr;
+      localStorage.setItem("yesA", JSON.stringify(yesA));
+    }
+    if (arrayName === "maybeMain") {
+      maybeA = tempArr;
+      localStorage.setItem("maybeA", JSON.stringify(maybeA));
+    }
+    if (arrayName === "notNowMain") {
+      notNowA = tempArr;
+      localStorage.setItem("notNowA", JSON.stringify(notNowA));
+    }
+    console.log(yesA, maybeA, notNowA);
+  },
 });
 refreshTitles();
-
 $.ajax({
   url: "https://geolocation-db.com/jsonp",
   jsonpCallback: "callback",
@@ -370,23 +377,34 @@ $.ajax({
 });
 
 $("#yes").click(function () {
-  yesA.push({ film: `${title}`, id: `${movie}` });
+  userHasSeenArr.push({ film: `${title}`, id: `${movie}` });
+  yesA.push(title);
+  localStorage.setItem("userHasSeenArr", JSON.stringify(userHasSeenArr));
   localStorage.setItem("yesA", JSON.stringify(yesA));
   refreshTitles();
   pickMovie(genres);
 });
 
 $("#maybe").click(function () {
-  maybeA.push({ film: `${title}`, id: `${movie}` });
+  userHasSeenArr.push({ film: `${title}`, id: `${movie}` });
+  yesA.push(title);
+  localStorage.setItem("userHasSeenArr", JSON.stringify(userHasSeenArr));
   localStorage.setItem("maybeA", JSON.stringify(maybeA));
   refreshTitles();
   pickMovie(genres);
 });
 
 $("#notNow").click(function () {
-  notNowA.push({ film: `${title}`, id: `${movie}` });
+  userHasSeenArr.push({ film: `${title}`, id: `${movie}` });
+  yesA.push(title);
+  localStorage.setItem("userHasSeenArr", JSON.stringify(userHasSeenArr));
   localStorage.setItem("notNowA", JSON.stringify(notNowA));
-  console.log(notNowA);
+  //  console.log(notNowA);
   refreshTitles();
+  pickMovie(genres);
+});
+$("#no").click(function () {
+  userHasSeenArr.push({ film: `${title}`, id: `${movie}` });
+  localStorage.setItem("userHasSeenArr", JSON.stringify(userHasSeenArr));
   pickMovie(genres);
 });

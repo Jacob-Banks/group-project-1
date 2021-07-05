@@ -16,9 +16,7 @@ let userHasSeenArr = [];
 let notNowA = [];
 let yesA = [];
 let maybeA = [];
-var tempM = [];
-var tempY = [];
-var tempN = [];
+var tempM;
 
 //array items will be pages that the user has viewed all 20 movies that page responds with
 let notThesePages = [];
@@ -221,7 +219,7 @@ function getMovieInfo(movie) {
   )
     .then((value) => value.json())
     .then((value) => {
-      // console.log(value);
+      console.log(value);
       logit = value;
       let cast = [];
       for (let i = 0; i < 6; i++) {
@@ -240,6 +238,7 @@ function getMovieInfo(movie) {
       document.getElementById("iframe").src = link;
       const posterPath = value.poster_path;
       title = value.title;
+      description = value.overview;
       whereToWatch = value["watch/providers"].results.CA;
       if (!("flatrate" in whereToWatch)) {
         $("#stream").html(" ");
@@ -303,6 +302,8 @@ function getMovieInfo(movie) {
     });
 }
 function refreshTitles() {
+  userHasSeenArr = JSON.parse(localStorage.getItem("userHasSeenArr"));
+  if (userHasSeenArr == null) userHasSeenArr = [];
   notNowA = JSON.parse(localStorage.getItem("notNowA"));
   if (notNowA == null) notNowA = [];
 
@@ -315,14 +316,33 @@ function refreshTitles() {
   $("#maybeMain").html(" ");
   $("#notNowMain").html(" ");
   for (item in yesA) {
-    $("#yesMain").append(`<li>${yesA[item]}</li>`);
+    $("#yesMain").append(
+      `<div class"pure-u-1-1"><p class"pure-u-10-12'>${yesA[item]}</p><span class"pure-u-1-12"><button class="pure-button liInfo">info</button></span>`
+    );
   }
   for (item in maybeA) {
-    $("#maybeMain").append(`<li>${maybeA[item]}</li>`);
+    $("#maybeMain").append(
+      `<div class"pure-u-1-1"><p class"pure-u-10-12'>${maybeA[item]}</p><span class"pure-u-1-12"><button class="pure-button liInfo">info</button></span>`
+    );
   }
   for (item in notNowA) {
-    $("#notNowMain").append(`<li>${notNowA[item]}</li>`);
+    $("#notNowMain").append(
+      `<div class"pure-u-1-1"><p class"pure-u-10-12'>${notNowA[item]}</p><span class"pure-u-1-12"><button class="pure-button liInfo">info</button></span>`
+    );
   }
+  $(".liInfo").on("click", function () {
+    //get id
+    userHasSeenArr = JSON.parse(localStorage.getItem("userHasSeenArr"));
+    tempM = $(this).parent()[0].previousSibling.textContent;
+    console.log(tempM);
+
+    for (let i = 0; i < userHasSeenArr.length; i++) {
+      if (tempM == userHasSeenArr[i].film) {
+        console.log("  found ya");
+        getMovieInfo(userHasSeenArr[i].id);
+      }
+    }
+  });
 }
 
 $(".movieList").sortable({
@@ -332,18 +352,19 @@ $(".movieList").sortable({
   helper: "clone",
 
   update: function (event) {
-    console.log(yesA, maybeA, notNowA);
+    // console.log(yesA, maybeA, notNowA);
     let tempArr = [];
     $(this)
       .children()
       .each(function () {
-        let text = $(this)[0].innerText.trim();
+        var text = $(this).find("p").text().trim();
         tempArr.push(text);
+        console.log(text);
       });
     let arrayName = $(this).attr("id");
     //console.log(tempArr);
 
-    console.log(arrayName);
+    //console.log(arrayName);
 
     if (arrayName === "yesMain") {
       yesA = tempArr;
@@ -357,7 +378,7 @@ $(".movieList").sortable({
       notNowA = tempArr;
       localStorage.setItem("notNowA", JSON.stringify(notNowA));
     }
-    console.log(yesA, maybeA, notNowA);
+    //console.log(yesA, maybeA, notNowA);
   },
 });
 refreshTitles();
@@ -387,7 +408,7 @@ $("#yes").click(function () {
 
 $("#maybe").click(function () {
   userHasSeenArr.push({ film: `${title}`, id: `${movie}` });
-  yesA.push(title);
+  maybeA.push(title);
   localStorage.setItem("userHasSeenArr", JSON.stringify(userHasSeenArr));
   localStorage.setItem("maybeA", JSON.stringify(maybeA));
   refreshTitles();
@@ -396,7 +417,7 @@ $("#maybe").click(function () {
 
 $("#notNow").click(function () {
   userHasSeenArr.push({ film: `${title}`, id: `${movie}` });
-  yesA.push(title);
+  notNowA.push(title);
   localStorage.setItem("userHasSeenArr", JSON.stringify(userHasSeenArr));
   localStorage.setItem("notNowA", JSON.stringify(notNowA));
   //  console.log(notNowA);
@@ -408,3 +429,5 @@ $("#no").click(function () {
   localStorage.setItem("userHasSeenArr", JSON.stringify(userHasSeenArr));
   pickMovie(genres);
 });
+
+//get id

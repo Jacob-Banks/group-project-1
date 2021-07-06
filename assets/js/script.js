@@ -16,9 +16,7 @@ let userHasSeenArr = [];
 let notNowA = [];
 let yesA = [];
 let maybeA = [];
-var tempM = [];
-var tempY = [];
-var tempN = [];
+var tempM;
 
 //array items will be pages that the user has viewed all 20 movies that page responds with
 let notThesePages = [];
@@ -29,7 +27,6 @@ const key = "&appid=7f412d4278c03b3c06e49f9a1ebebf0b";
 const oneCall = "https://api.openweathermap.org/data/2.5/onecall?";
 // call geographic coordinates
 let limit, temp, city, nowweather;
-
 
 // get current conditions
 var currentWeather = function () {
@@ -64,8 +61,6 @@ var currentWeather = function () {
           if (conditions === "Sunny") {
             cinditions = "Clear";
           }
-
-
           ///// LINKING CONDITION WITH MOVIE GENRES
           // if sunny and below 0 degrees, suggest ____ genres
           if (conditions === "Clear" && temp < 0) {
@@ -163,19 +158,150 @@ var currentWeather = function () {
     }
   );
 };
+function pickMovie(genres) {
+  page = Math.ceil(Math.random() * possiblePages); // there is no page 0
+  //genre is a id number ie drama has a id of '18'---> id is string
 
+  //set the page that the api will resspond with 20 movies
+  while (notThesePages.includes(page)) {
+    page = Math.ceil(Math.random() * possiblePages);
+  }
+
+  // console.log(page + " " + genres);
+
+  fetch(
+    //sort all movies by vote count in provided genres on this page.. api only allows 1 page with 20 results per fetch
+    `https://api.themoviedb.org/3/discover/movie?api_key=eb7b39196026d99a9bb9dd30201f9b64&sort_by=vote_count.desc&with_genres=${genres}&page=${page}`
+  )
+    .then((value) => value.json())
+    .then((value) => {
+      // console.log(value);
+
+      movieValue = value;
+      //get which page this is
+      thisPageIS = value.page;
+      //pick a random movie from this page  20 options
+      whichMovie = Math.floor(Math.random() * 20);
+      movie = value.results[whichMovie].id;
+      //check if user has seen this movie
+      // if (userHasSeenArr.includes(movie)) {
+      //   checkMovie();
+      // } else {
+      getMovieInfo(movie);
+      //}
+    });
+}
+// function checkMovie() {
+//   let seen = 0;
+//   movieValue.results.forEach((element) => {
+//     if (userHasSeenArr.includes(element.id)) {
+//       seen++;
+//     }
+//   });
+//   console.log(
+//     "a dublicate movie was selected this page has " +
+//       seen +
+//       " items in user has seen array " +
+//       page
+//   );
+//   if (seen >= 19) {
+//     console.log("page full");
+//     possiblePages++;
+//     notThesePages.push(thisPageIS);
+//     pickMovie();
+//   } else {
+//     pickMovie();
+//   }
+// }
+function getMovieInfo(movie) {
+  fetch(
+    "https://api.themoviedb.org/3/movie/" +
+      movie +
+      "?api_key=eb7b39196026d99a9bb9dd30201f9b64&append_to_response=videos,images,watch/providers,credits"
+  )
+    .then((value) => value.json())
+    .then((value) => {
+      console.log(value);
+      logit = value;
+      let cast = [];
+      for (let i = 0; i < 6; i++) {
+        cast.push(value.credits.cast[i].name);
+      }
+      let youtubeKey = "";
+      value.videos.results.forEach((element) => {
+        if (element.type === "Trailer") {
+          youtubeKey = element.key;
+        }
+      });
+      if (!youtubeKey) {
+        youtubeKey = value.videos.results[0].key;
+      }
+      const link = `https://www.youtube.com/embed/${youtubeKey}`;
+      document.getElementById("iframe").src = link;
+      const posterPath = value.poster_path;
+      title = value.title;
+      description = value.overview;
+      whereToWatch = value["watch/providers"].results.CA;
+      if (!("flatrate" in whereToWatch)) {
+        $("#stream").html(" ");
+        $("#stream").html("Sorry can't find a Stream");
+      } else {
+        $("#stream").html(" ");
+        value["watch/providers"].results["CA"].flatrate.forEach((element) => {
+          logoS = element.logo_path;
+          // console.log[element];
+
+          $("#stream").append(
+            `<img src="https://image.tmdb.org/t/p/w45/${logoS}"/>`
+          );
+        });
+      }
+
+      if (!("rent" in whereToWatch)) {
+        $("#rent").html(" ");
+        $("#rent").html("Sorry can't find a Stream");
+      } else {
+        $("#rent").html(" ");
+        value["watch/providers"].results["CA"].rent.forEach((element) => {
+          logoS = element.logo_path;
+          //console.log[element];
+
+          $("#rent").append(
+            `<img src="https://image.tmdb.org/t/p/w45/${logoS}"/>`
+          );
+        });
+      }
+      if (!("buy" in whereToWatch)) {
+        $("#buy").html(" ");
+        $("#buy").html("Sorry can't find a Stream");
+      } else {
+        $("#buy").html(" ");
+        value["watch/providers"].results["CA"].buy.forEach((element) => {
+          logoS = element.logo_path;
+          // console.log[element];
+
+          $("#buy").append(
+            `<img src="https://image.tmdb.org/t/p/w45/${logoS}"/>`
+          );
+        });
+      }
+    });
+}
 
 // render city & conditions in modal window
 function populateIntroModal(genres) {
-  document.getElementById("modal-1").style.display="block"
-  $("#modal-text").append(`<p>Looks like it's ${nowweather} and ${temp} in ${city}. Here are some movie suggestions based on that.</p>`)
-
+  document.getElementById("modal-1").style.display = "block";
+  $("#modal-text").append(
+    `<p>Looks like it's ${nowweather} and ${temp} in ${city}. Here are some movie suggestions based on that.</p>`
+  );
 
   // $("#close").on("click", pickMovie(genres));
-  
-  $("#close").on("click", () => {document.getElementById("modal-1").style.display="none"; pickMovie(genres)});
-}
 
+  $("#close").on("click", () => {
+    document.getElementById("modal-1").style.display = "none";
+    pickMovie(genres);
+  });
+}
 
 function pickMovie(genres) {
   page = Math.ceil(Math.random() * possiblePages); // there is no page 0
@@ -322,6 +448,9 @@ function getMovieInfo(movie) {
     });
 }
 function refreshTitles() {
+  userHasSeenArr = JSON.parse(localStorage.getItem("userHasSeenArr"));
+  if (userHasSeenArr == null) userHasSeenArr = [];
+
   notNowA = JSON.parse(localStorage.getItem("notNowA"));
   if (notNowA == null) notNowA = [];
 
@@ -334,14 +463,33 @@ function refreshTitles() {
   $("#maybeMain").html(" ");
   $("#notNowMain").html(" ");
   for (item in yesA) {
-    $("#yesMain").append(`<li>${yesA[item]}</li>`);
+    $("#yesMain").append(
+      `<div class"pure-u-1-1"><p class"pure-u-10-12'>${yesA[item]}</p><span class"pure-u-1-12"><button class="pure-button liInfo">info</button></span>`
+    );
   }
   for (item in maybeA) {
-    $("#maybeMain").append(`<li>${maybeA[item]}</li>`);
+    $("#maybeMain").append(
+      `<div class"pure-u-1-1"><p class"pure-u-10-12'>${maybeA[item]}</p><span class"pure-u-1-12"><button class="pure-button liInfo">info</button></span>`
+    );
   }
   for (item in notNowA) {
-    $("#notNowMain").append(`<li>${notNowA[item]}</li>`);
+    $("#notNowMain").append(
+      `<div class"pure-u-1-1"><p class"pure-u-10-12'>${notNowA[item]}</p><span class"pure-u-1-12"><button class="pure-button liInfo">info</button></span>`
+    );
   }
+  $(".liInfo").on("click", function () {
+    //get id
+    userHasSeenArr = JSON.parse(localStorage.getItem("userHasSeenArr"));
+    tempM = $(this).parent()[0].previousSibling.textContent;
+    console.log(tempM);
+
+    for (let i = 0; i < userHasSeenArr.length; i++) {
+      if (tempM == userHasSeenArr[i].film) {
+        console.log("  found ya");
+        getMovieInfo(userHasSeenArr[i].id);
+      }
+    }
+  });
 }
 
 $(".movieList").sortable({
@@ -351,18 +499,19 @@ $(".movieList").sortable({
   helper: "clone",
 
   update: function (event) {
-    console.log(yesA, maybeA, notNowA);
+    // console.log(yesA, maybeA, notNowA);
     let tempArr = [];
     $(this)
       .children()
       .each(function () {
-        let text = $(this)[0].innerText.trim();
+        var text = $(this).find("p").text().trim();
         tempArr.push(text);
+        console.log(text);
       });
     let arrayName = $(this).attr("id");
     //console.log(tempArr);
 
-    console.log(arrayName);
+    //console.log(arrayName);
 
     if (arrayName === "yesMain") {
       yesA = tempArr;
@@ -376,11 +525,11 @@ $(".movieList").sortable({
       notNowA = tempArr;
       localStorage.setItem("notNowA", JSON.stringify(notNowA));
     }
-    console.log(yesA, maybeA, notNowA);
+    //console.log(yesA, maybeA, notNowA);
   },
 });
-refreshTitles();
 
+refreshTitles();
 $.ajax({
   url: "https://geolocation-db.com/jsonp",
   jsonpCallback: "callback",
@@ -408,7 +557,7 @@ $("#yes").click(function () {
 
 $("#maybe").click(function () {
   userHasSeenArr.push({ film: `${title}`, id: `${movie}` });
-  yesA.push(title);
+  maybeA.push(title);
   localStorage.setItem("userHasSeenArr", JSON.stringify(userHasSeenArr));
   localStorage.setItem("maybeA", JSON.stringify(maybeA));
   refreshTitles();
@@ -417,7 +566,7 @@ $("#maybe").click(function () {
 
 $("#notNow").click(function () {
   userHasSeenArr.push({ film: `${title}`, id: `${movie}` });
-  yesA.push(title);
+  notNowA.push(title);
   localStorage.setItem("userHasSeenArr", JSON.stringify(userHasSeenArr));
   localStorage.setItem("notNowA", JSON.stringify(notNowA));
   //  console.log(notNowA);

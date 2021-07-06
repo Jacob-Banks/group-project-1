@@ -1,0 +1,155 @@
+html {
+  background-image: linear-gradient(to right, darkgray, gray);
+}
+body {
+  margin: 0 5%;
+}
+#header {
+  background-image: linear-gradient(to right, gray, black);
+  height: 50px;
+  color: white;
+  display: flex;
+  justify-content: center;
+}
+#titleMain {
+  margin-top: 0px;
+  font-size: 30px;
+  font: 200;
+  color: black;
+  padding: 4px;
+  background-color: #f5c518;
+  border-radius: 0.1cm;
+  height: 40px;
+}
+
+#movieTitle {
+  margin-top: 0px;
+  font-size: 30px;
+  font: 200;
+  color: black;
+  padding: 4px;
+  background-image: linear-gradient(to right, #f5c518, black);
+  border-radius: 0.1cm;
+  height: 40px;
+}
+#aside {
+  margin-top: 5px;
+}
+.myList {
+  text-align: center;
+  margin: 3px;
+  background-image: linear-gradient(to right, #f5c518, black);
+}
+
+h4 {
+  margin: 0 0 0 0;
+}
+
+.iframe-container {
+  overflow: hidden;
+  /* 16:9 aspect ratio */
+  padding-top: 56.25%;
+  position: relative;
+}
+.iframe-container iframe {
+  border: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.cast {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.choices {
+  display: flex;
+  justify-content: center;
+}
+
+.pure-button {
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  background: #f5c518;
+  padding: 10px;
+  margin: 10px;
+  border: black solid 1px;
+}
+
+.pure-button:hover {
+  background: black;
+  color: #f5c518;
+}
+
+#poster img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  width: auto;
+}
+#trailer {
+  margin-left: 6px;
+}
+#movieInfo {
+  margin: 5px 0;
+  font-size: 30px;
+}
+#movieInfo p {
+  font-size: 18px;
+}
+#movieInfo h2,
+h3 {
+  margin: 5px 0;
+  display: block;
+  text-align: center;
+}
+#yesMain,
+#notNowMain,
+#maybeMain {
+  list-style: none;
+  padding: 0;
+  margin-top: 3px;
+  color: azure;
+}
+
+/* Styling intro modal */
+.modal {
+  z-index: 10;
+	display: none;
+	padding-top: 100px;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0,0,0);
+	background-color: rgba(0,0,0,0.8)
+}
+
+.modal-content {
+	margin: auto;
+	background-color: #fff;
+	position: relative;
+	padding: 0;
+	outline: 0;
+	max-width: 600px
+}
+.modal-inner { padding: 20px 30px; }
+.modal-close {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	position: absolute;
+	right: 0;
+	top: 0;
+	background: #ccc;
+	padding: 6px 10px;
+}
+.animate-opacity { animation: opac 0.8s }@keyframes opac{from{opacity:0} to{opacity:1}}
+/* End of intro modal styles */

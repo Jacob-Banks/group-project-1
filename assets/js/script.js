@@ -27,6 +27,7 @@ const key = "&appid=7f412d4278c03b3c06e49f9a1ebebf0b";
 // call current weather conditions
 const oneCall = "https://api.openweathermap.org/data/2.5/onecall?";
 // call geographic coordinates
+let limit, temp, city, nowweather;
 
 // get current conditions
 var currentWeather = function () {
@@ -37,6 +38,7 @@ var currentWeather = function () {
           // get coordinates
           temp = data.current.temp;
           conditions = data.current.weather[0].main;
+          nowweather = data.current.weather[0].description;
           //console.log(data);
 
           ///// CONSOLIDATE CONDITION CODES
@@ -52,7 +54,6 @@ var currentWeather = function () {
             conditions === "Dust" ||
             conditions === "Fog" ||
             conditions === "Sand" ||
-            conditions === "Dust" ||
             conditions === "Ash"
           ) {
             conditions = "Ugly";
@@ -68,23 +69,23 @@ var currentWeather = function () {
           }
           // if cloudy/rainy and below 0, suggest ____ genres
           if (conditions === "Clouds" && temp < 0) {
-            genres = "80,53,99";
+            genres = "18,9648,27";
           }
           // if ugly and below 0, suggest ____ genres
           if (conditions === "Ugly" && temp < 0) {
-            genres = "10751,53,27";
+            genres = "18,53,27";
           }
           // if rain and below 0
           if (conditions === "Rain" && temp > 0) {
-            genres = "10770,80,53,10770";
+            genres = "10770,80,53";
           }
           // if thunderstorm and below 0
           if (conditions === "Thunderstorm" && temp > 0) {
-            genres = "10749,16,878,14";
+            genres = "16,878,14";
           }
           // snow and below 0
           if (conditions === "Snow" && temp > 0) {
-            genres = "36,14,35,16";
+            genres = "14,35,16";
           }
           // if sunny and between 0-20 degree, suggest ____ genres
           if (conditions === "Clear" && temp > 0 && temp <= 20) {
@@ -96,11 +97,11 @@ var currentWeather = function () {
           }
           // is ugly and between 0-20 degrees, suggest _____ genres
           if (conditions === "Ugly" && temp > 0 && temp <= 20) {
-            genres = "878,12,14,878,53";
+            genres = "878,12,14";
           }
           // if rain anf 0-20 degrees
           if (conditions === "Rain" && temp > 0 && temp <= 20) {
-            genres = "10749,18,878,12";
+            genres = "18,878,12";
           }
           //if thunderstorm and 0-20 degrees
           if (conditions === "Thunderstorm" && temp > 0 && temp <= 20) {
@@ -120,19 +121,19 @@ var currentWeather = function () {
           }
           // if ugly and 21-30, suggest _____ genres
           if (conditions === "Ugly" && temp > 20 && temp <= 30) {
-            genres = "14,10751,10752,99";
+            genres = "10751,12";
           }
           // if rain and 21-30 degrees
           if (conditions === "Rain" && temp > 20 && temp <= 30) {
-            genres = "10749,10751,14,16";
+            genres = "14,16";
           }
           // if thunderstorms and 21-30 degrees
           if (conditions === "Thunderstorm" && temp > 20 && temp <= 30) {
-            genres = "28,12,27,10770";
+            genres = "28,12";
           }
           // if sunny and 30+ degrees, suggest _____ genres
           if (conditions === "Clear" && temp >= 30) {
-            genres = "35,16,10751,14,10402,10770";
+            genres = "35,10402";
           }
           // if cloudy/rainy and 30+ degrees, suggest _____ genres
           if (conditions === "Clouds" && temp >= 30) {
@@ -144,14 +145,15 @@ var currentWeather = function () {
           }
           // if rain and 30+
           if (conditions === "Rain" && temp >= 30) {
-            genres = "10402,9648,10749";
+            genres = "10402,10749";
           }
           // if thunderstorm and 30+
           if (conditions === "Thunderstorm" && temp >= 30) {
-            genres = "27,35,14,18,80";
+            genres = "35,80";
           }
-          // console.log(genres);
-          pickMovie(genres);
+          console.log(genres);
+          // pickMovie(genres);
+          populateIntroModal(genres);
         });
       }
     }
@@ -280,6 +282,150 @@ function getMovieInfo(movie) {
           );
         });
       }
+    });
+}
+
+// render city & conditions in modal window
+function populateIntroModal(genres) {
+  document.getElementById("modal-1").style.display = "block";
+  $("#modal-text").append(
+    `<p>Looks like it's ${nowweather} and ${temp} in ${city}. Here are some movie suggestions based on that.</p>`
+  );
+
+  // $("#close").on("click", pickMovie(genres));
+
+  $("#close").on("click", () => {
+    document.getElementById("modal-1").style.display = "none";
+    pickMovie(genres);
+  });
+}
+
+function pickMovie(genres) {
+  page = Math.ceil(Math.random() * possiblePages); // there is no page 0
+  //genre is a id number ie drama has a id of '18'---> id is string
+
+  //set the page that the api will resspond with 20 movies
+  while (notThesePages.includes(page)) {
+    page = Math.ceil(Math.random() * possiblePages);
+  }
+
+  // console.log(page + " " + genres);
+
+  fetch(
+    //sort all movies by vote count in provided genres on this page.. api only allows 1 page with 20 results per fetch
+    `https://api.themoviedb.org/3/discover/movie?api_key=eb7b39196026d99a9bb9dd30201f9b64&sort_by=vote_count.desc&with_genres=${genres}&page=${page}`
+  )
+    .then((value) => value.json())
+    .then((value) => {
+      // console.log(value);
+
+      movieValue = value;
+      //get which page this is
+      thisPageIS = value.page;
+      //pick a random movie from this page  20 options
+      whichMovie = Math.floor(Math.random() * 20);
+      movie = value.results[whichMovie].id;
+      //check if user has seen this movie
+      // if (userHasSeenArr.includes(movie)) {
+      //   checkMovie();
+      // } else {
+      getMovieInfo(movie);
+      //}
+    });
+}
+// function checkMovie() {
+//   let seen = 0;
+//   movieValue.results.forEach((element) => {
+//     if (userHasSeenArr.includes(element.id)) {
+//       seen++;
+//     }
+//   });
+//   console.log(
+//     "a dublicate movie was selected this page has " +
+//       seen +
+//       " items in user has seen array " +
+//       page
+//   );
+//   if (seen >= 19) {
+//     console.log("page full");
+//     possiblePages++;
+//     notThesePages.push(thisPageIS);
+//     pickMovie();
+//   } else {
+//     pickMovie();
+//   }
+// }
+function getMovieInfo(movie) {
+  fetch(
+    "https://api.themoviedb.org/3/movie/" +
+      movie +
+      "?api_key=eb7b39196026d99a9bb9dd30201f9b64&append_to_response=videos,images,watch/providers,credits"
+  )
+    .then((value) => value.json())
+    .then((value) => {
+      // console.log(value);
+      logit = value;
+      let cast = [];
+      for (let i = 0; i < 6; i++) {
+        cast.push(value.credits.cast[i].name);
+      }
+      let youtubeKey = "";
+      value.videos.results.forEach((element) => {
+        if (element.type === "Trailer") {
+          youtubeKey = element.key;
+        }
+      });
+      if (!youtubeKey) {
+        youtubeKey = value.videos.results[0].key;
+      }
+      const link = `https://www.youtube.com/embed/${youtubeKey}`;
+      document.getElementById("iframe").src = link;
+      const posterPath = value.poster_path;
+      title = value.title;
+      whereToWatch = value["watch/providers"].results.CA;
+      if (!("flatrate" in whereToWatch)) {
+        $("#stream").html(" ");
+        $("#stream").html("Sorry can't find a Stream");
+      } else {
+        $("#stream").html(" ");
+        value["watch/providers"].results["CA"].flatrate.forEach((element) => {
+          logoS = element.logo_path;
+          // console.log[element];
+
+          $("#stream").append(
+            `<img src="https://image.tmdb.org/t/p/w45/${logoS}"/>`
+          );
+        });
+      }
+
+      if (!("rent" in whereToWatch)) {
+        $("#rent").html(" ");
+        $("#rent").html("Sorry can't find a Stream");
+      } else {
+        $("#rent").html(" ");
+        value["watch/providers"].results["CA"].rent.forEach((element) => {
+          logoS = element.logo_path;
+          //console.log[element];
+
+          $("#rent").append(
+            `<img src="https://image.tmdb.org/t/p/w45/${logoS}"/>`
+          );
+        });
+      }
+      if (!("buy" in whereToWatch)) {
+        $("#buy").html(" ");
+        $("#buy").html("Sorry can't find a Stream");
+      } else {
+        $("#buy").html(" ");
+        value["watch/providers"].results["CA"].buy.forEach((element) => {
+          logoS = element.logo_path;
+          // console.log[element];
+
+          $("#buy").append(
+            `<img src="https://image.tmdb.org/t/p/w45/${logoS}"/>`
+          );
+        });
+      }
 
       $("#cast").html(`
       <p> Made With</p>
@@ -301,6 +447,7 @@ function getMovieInfo(movie) {
 function refreshTitles() {
   userHasSeenArr = JSON.parse(localStorage.getItem("userHasSeenArr"));
   if (userHasSeenArr == null) userHasSeenArr = [];
+
   notNowA = JSON.parse(localStorage.getItem("notNowA"));
   if (notNowA == null) notNowA = [];
 
@@ -378,6 +525,7 @@ $(".movieList").sortable({
     //console.log(yesA, maybeA, notNowA);
   },
 });
+
 refreshTitles();
 $.ajax({
   url: "https://geolocation-db.com/jsonp",
@@ -386,6 +534,7 @@ $.ajax({
   success: function (location) {
     lat = location.latitude;
     lon = location.longitude;
+    city = location.city;
     currentWeather();
     // console.log("got lat lon");
   }, // if cant find user locationt
@@ -426,5 +575,3 @@ $("#no").click(function () {
   localStorage.setItem("userHasSeenArr", JSON.stringify(userHasSeenArr));
   pickMovie(genres);
 });
-
-//get id

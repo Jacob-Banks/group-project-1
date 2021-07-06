@@ -186,6 +186,7 @@ function pickMovie(genres) {
       whichMovie = Math.floor(Math.random() * 20);
       movie = value.results[whichMovie].id;
       //check if user has seen this movie
+
       if (userHasSeenArr.some((e) => e.id == movie)) {
         checkMovie();
       } else {
@@ -326,35 +327,31 @@ function pickMovie(genres) {
       whichMovie = Math.floor(Math.random() * 20);
       movie = value.results[whichMovie].id;
       //check if user has seen this movie
-      // if (userHasSeenArr.includes(movie)) {
-      //   checkMovie();
-      // } else {
-      getMovieInfo(movie);
+      if (userHasSeenArr.some((e) => e.id == movie)) {
+        checkMovie();
+      } else {
+        getMovieInfo(movie);
+      }
       //}
     });
 }
-// function checkMovie() {
-//   let seen = 0;
-//   movieValue.results.forEach((element) => {
-//     if (userHasSeenArr.includes(element.id)) {
-//       seen++;
-//     }
-//   });
-//   console.log(
-//     "a dublicate movie was selected this page has " +
-//       seen +
-//       " items in user has seen array " +
-//       page
-//   );
-//   if (seen >= 19) {
-//     console.log("page full");
-//     possiblePages++;
-//     notThesePages.push(thisPageIS);
-//     pickMovie();
-//   } else {
-//     pickMovie();
-//   }
-// }
+function checkMovie() {
+  let seen = 0;
+  movieValue.results.forEach((element) => {
+    userHasSeenArr.forEach((item) => {
+      if (item.id == element.id) {
+        seen++;
+      }
+    });
+  });
+  console.log("in checkmovie");
+  if (seen >= 19) {
+    console.log("page full");
+    possiblePages++;
+    notThesePages.push(thisPageIS);
+  }
+  pickMovie(genres);
+}
 function getMovieInfo(movie) {
   fetch(
     "https://api.themoviedb.org/3/movie/" +

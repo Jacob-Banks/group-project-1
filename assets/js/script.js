@@ -159,132 +159,6 @@ var currentWeather = function () {
     }
   );
 };
-function pickMovie(genres) {
-  page = Math.ceil(Math.random() * possiblePages); // there is no page 0
-  //genre is a id number ie drama has a id of '18'---> id is string
-
-  //set the page that the api will resspond with 20 movies
-  while (notThesePages.includes(page)) {
-    page = Math.ceil(Math.random() * possiblePages);
-  }
-
-  //console.log(page + " page of " + possiblePages);
-
-  fetch(
-    //sort all movies by vote count in provided genres on this page.. api only allows 1 page with 20 results per fetch
-    `https://api.themoviedb.org/3/discover/movie?api_key=eb7b39196026d99a9bb9dd30201f9b64&sort_by=vote_count.desc&with_genres=${genres}&page=${page}`
-  )
-    .then((value) => value.json())
-    .then((value) => {
-      // console.log(value);
-
-      movieValue = value;
-      //get which page this is
-      thisPageIS = value.page;
-      //  console.log(thisPageIS);
-      //pick a random movie from this page  20 options
-      whichMovie = Math.floor(Math.random() * 20);
-      movie = value.results[whichMovie].id;
-      //check if user has seen this movie
-
-      if (userHasSeenArr.some((e) => e.id == movie)) {
-        checkMovie();
-      } else {
-        getMovieInfo(movie);
-      }
-    });
-}
-function checkMovie() {
-  let seen = 0;
-  movieValue.results.forEach((element) => {
-    userHasSeenArr.forEach((item) => {
-      if (item.id == element.id) {
-        seen++;
-      }
-    });
-  });
-  console.log("in checkmovie");
-  if (seen >= 19) {
-    console.log("page full");
-    possiblePages++;
-    notThesePages.push(thisPageIS);
-  }
-  pickMovie(genres);
-}
-function getMovieInfo(movie) {
-  fetch(
-    "https://api.themoviedb.org/3/movie/" +
-      movie +
-      "?api_key=eb7b39196026d99a9bb9dd30201f9b64&append_to_response=videos,images,watch/providers,credits"
-  )
-    .then((value) => value.json())
-    .then((value) => {
-      // console.log(value);
-      logit = value;
-      let cast = [];
-      for (let i = 0; i < 6; i++) {
-        cast.push(value.credits.cast[i].name);
-      }
-      let youtubeKey = "";
-      value.videos.results.forEach((element) => {
-        if (element.type === "Trailer") {
-          youtubeKey = element.key;
-        }
-      });
-      if (!youtubeKey) {
-        youtubeKey = value.videos.results[0].key;
-      }
-      const link = `https://www.youtube.com/embed/${youtubeKey}`;
-      document.getElementById("iframe").src = link;
-      const posterPath = value.poster_path;
-      title = value.title;
-      description = value.overview;
-      whereToWatch = value["watch/providers"].results.CA;
-      if (!("flatrate" in whereToWatch)) {
-        $("#stream").html(" ");
-        $("#stream").html("Sorry can't find a Stream");
-      } else {
-        $("#stream").html(" ");
-        value["watch/providers"].results["CA"].flatrate.forEach((element) => {
-          logoS = element.logo_path;
-          // console.log[element];
-
-          $("#stream").append(
-            `<img src="https://image.tmdb.org/t/p/w45/${logoS}"/>`
-          );
-        });
-      }
-
-      if (!("rent" in whereToWatch)) {
-        $("#rent").html(" ");
-        $("#rent").html("Sorry can't find a Stream");
-      } else {
-        $("#rent").html(" ");
-        value["watch/providers"].results["CA"].rent.forEach((element) => {
-          logoS = element.logo_path;
-          //console.log[element];
-
-          $("#rent").append(
-            `<img src="https://image.tmdb.org/t/p/w45/${logoS}"/>`
-          );
-        });
-      }
-      if (!("buy" in whereToWatch)) {
-        $("#buy").html(" ");
-        $("#buy").html("Sorry can't find a Stream");
-      } else {
-        $("#buy").html(" ");
-        value["watch/providers"].results["CA"].buy.forEach((element) => {
-          logoS = element.logo_path;
-          // console.log[element];
-
-          $("#buy").append(
-            `<img src="https://image.tmdb.org/t/p/w45/${logoS}"/>`
-          );
-        });
-      }
-    });
-}
 
 // render city & conditions in modal window
 function populateIntroModal(genres) {
@@ -379,6 +253,7 @@ function getMovieInfo(movie) {
       document.getElementById("iframe").src = link;
       const posterPath = value.poster_path;
       title = value.title;
+      description = value.overview;
       whereToWatch = value["watch/providers"].results.CA;
       if (!("flatrate" in whereToWatch)) {
         $("#stream").html(" ");

@@ -10,6 +10,7 @@ let movie,
   lat,
   lon,
   x,
+  newfilm,
   genres,
   conditions;
 let userHasSeenArr = [];
@@ -20,7 +21,7 @@ var tempM;
 
 //array items will be pages that the user has viewed all 20 movies that page responds with
 let notThesePages = [];
-let possiblePages = 5;
+let possiblePages = 1;
 // openweather api key
 const key = "&appid=7f412d4278c03b3c06e49f9a1ebebf0b";
 // call current weather conditions
@@ -167,7 +168,7 @@ function pickMovie(genres) {
     page = Math.ceil(Math.random() * possiblePages);
   }
 
-  // console.log(page + " " + genres);
+  //console.log(page + " page of " + possiblePages);
 
   fetch(
     //sort all movies by vote count in provided genres on this page.. api only allows 1 page with 20 results per fetch
@@ -180,39 +181,35 @@ function pickMovie(genres) {
       movieValue = value;
       //get which page this is
       thisPageIS = value.page;
+      //  console.log(thisPageIS);
       //pick a random movie from this page  20 options
       whichMovie = Math.floor(Math.random() * 20);
       movie = value.results[whichMovie].id;
       //check if user has seen this movie
-      // if (userHasSeenArr.includes(movie)) {
-      //   checkMovie();
-      // } else {
-      getMovieInfo(movie);
-      //}
+      if (userHasSeenArr.some((e) => e.id == movie)) {
+        checkMovie();
+      } else {
+        getMovieInfo(movie);
+      }
     });
 }
-// function checkMovie() {
-//   let seen = 0;
-//   movieValue.results.forEach((element) => {
-//     if (userHasSeenArr.includes(element.id)) {
-//       seen++;
-//     }
-//   });
-//   console.log(
-//     "a dublicate movie was selected this page has " +
-//       seen +
-//       " items in user has seen array " +
-//       page
-//   );
-//   if (seen >= 19) {
-//     console.log("page full");
-//     possiblePages++;
-//     notThesePages.push(thisPageIS);
-//     pickMovie();
-//   } else {
-//     pickMovie();
-//   }
-// }
+function checkMovie() {
+  let seen = 0;
+  movieValue.results.forEach((element) => {
+    userHasSeenArr.forEach((item) => {
+      if (item.id == element.id) {
+        seen++;
+      }
+    });
+  });
+  console.log("in checkmovie");
+  if (seen >= 19) {
+    console.log("page full");
+    possiblePages++;
+    notThesePages.push(thisPageIS);
+  }
+  pickMovie(genres);
+}
 function getMovieInfo(movie) {
   fetch(
     "https://api.themoviedb.org/3/movie/" +
@@ -221,7 +218,7 @@ function getMovieInfo(movie) {
   )
     .then((value) => value.json())
     .then((value) => {
-      console.log(value);
+      // console.log(value);
       logit = value;
       let cast = [];
       for (let i = 0; i < 6; i++) {
@@ -442,7 +439,7 @@ function getMovieInfo(movie) {
       `);
 
       $("#poster").html(`
-      <img class = "pure-img" src="http://image.tmdb.org/t/p/w400/${posterPath}" />`);
+      <img class = "pure-img" src="http://image.tmdb.org/t/p/w342/${posterPath}" />`);
       $("#movieTitle").html(title);
       $("#description").html(description);
     });
@@ -464,28 +461,28 @@ function refreshTitles() {
   $("#notNowMain").html(" ");
   for (item in yesA) {
     $("#yesMain").append(
-      `<div class"pure-u-1-1"><p class"pure-u-10-12'>${yesA[item]}</p><span class"pure-u-1-12"><button class="pure-button liInfo">info</button></span>`
+      `<div class="pure-g"><p class="pure-u-20-24">${yesA[item]}</p><span class="pure-u-2-24"><button class="pure-button liInfo"><i class="fas fa-info"></i></button></span> <span class="pure-u-1-24"><button class="pure-button liInfo"><i class="fas fa-trash-alt"></i></button></span><div>`
     );
   }
   for (item in maybeA) {
     $("#maybeMain").append(
-      `<div class"pure-u-1-1"><p class"pure-u-10-12'>${maybeA[item]}</p><span class"pure-u-1-12"><button class="pure-button liInfo">info</button></span>`
+      `<div class="pure-g"><p class="pure-u-15-24">${maybeA[item]}</p><span class="pure-u-4-24"><button class="pure-button liInfo">info</button></span> <span class="pure-u-4-24"><button class="pure-button liInfo">delete</button></span><div>`
     );
   }
   for (item in notNowA) {
     $("#notNowMain").append(
-      `<div class"pure-u-1-1"><p class"pure-u-10-12'>${notNowA[item]}</p><span class"pure-u-1-12"><button class="pure-button liInfo">info</button></span>`
+      `<div class="pure-g"><p class="pure-u-15-24">${notNowA[item]}</p><span class="pure-u-4-24"><button class="pure-button liInfo">info</button></span> <span class="pure-u-4-24"><button class="pure-button liInfo">delete</button></span><div>`
     );
   }
   $(".liInfo").on("click", function () {
     //get id
     userHasSeenArr = JSON.parse(localStorage.getItem("userHasSeenArr"));
     tempM = $(this).parent()[0].previousSibling.textContent;
-    console.log(tempM);
+    // console.log(tempM);
 
     for (let i = 0; i < userHasSeenArr.length; i++) {
       if (tempM == userHasSeenArr[i].film) {
-        console.log("  found ya");
+        //   console.log("  found ya");
         getMovieInfo(userHasSeenArr[i].id);
       }
     }

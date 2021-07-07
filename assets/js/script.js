@@ -334,19 +334,50 @@ function refreshTitles() {
   $("#notNowMain").html(" ");
   for (item in yesA) {
     $("#yesMain").append(
-      `<div class="pure-g"><p class="pure-u-20-24">${yesA[item]}</p><a href="#titleMain"  class="pure-u-2-24"><button class="pure-button liInfo"><i class="fas fa-info"></i></button></a> <span class="pure-u-1-24"><button class="pure-button liInfo"><i class="fas fa-trash-alt"></i></button></span><div>`
+      `<div class="pure-g"><p class="pure-u-20-24">${yesA[item]}</p><a href="#titleMain"  class="pure-u-2-24"><button class="pure-button liInfo"><i class="fas fa-info"></i></button></a> <span class="pure-u-1-24"><button class="pure-button liTrash"><i class="fas fa-trash-alt"></i></button></span><div>`
     );
   }
   for (item in maybeA) {
     $("#maybeMain").append(
-      `<div class="pure-g"><p class="pure-u-15-24">${maybeA[item]}</p><a href="#titleMain"  class="pure-u-2-24"><button class="pure-button liInfo">info</button></a> <span class="pure-u-4-24"><button class="pure-button liInfo">delete</button></span><div>`
+      `<div class="pure-g"><p class="pure-u-15-24">${maybeA[item]}</p><a href="#titleMain"  class="pure-u-2-24"><button class="pure-button liInfo"><i class="fas fa-info"></i></button></a> <span class="pure-u-1-24"><button class="pure-button liTrash"><i class="fas fa-trash-alt"></i></button></span><div>`
     );
   }
   for (item in notNowA) {
     $("#notNowMain").append(
-      `<div class="pure-g"><p class="pure-u-15-24">${notNowA[item]}</p><a href="#titleMain"  class="pure-u-2-24"><button class="pure-button liInfo">info</button></a> <span class="pure-u-4-24"><button class="pure-button liInfo">delete</button></span><div>`
+      `<div class="pure-g"><p class="pure-u-15-24">${notNowA[item]}</p><a href="#titleMain"  class="pure-u-2-24"><button class="pure-button liInfo"><i class="fas fa-info"></i></button></a> <span class="pure-u-1-24"><button class="pure-button liTrash"><i class="fas fa-trash-alt"></i></button></span><div>`
     );
   }
+
+  $(".liTrash").click(function () {
+    let val = $(this).parent().parent()[0].firstChild.textContent;
+    //var val = $(this).text();
+     console.log(val);
+     for(var i = yesA.length - 1; i >= 0; i--) {
+       if(yesA[i] === val) {
+          yesA.splice(i, 1);
+          console.log(yesA);
+          localStorage.setItem("yesA", JSON.stringify(yesA));
+       }
+   }
+   for(var i = maybeA.length - 1; i >= 0; i--) {
+    if(maybeA[i] === val) {
+       maybeA.splice(i, 1);
+       console.log(maybeA);
+       localStorage.setItem("maybeA", JSON.stringify(maybeA));
+    }
+}
+
+for(var i = notNowA.length - 1; i >= 0; i--) {
+  if(notNowA[i] === val) {
+    notNowA.splice(i, 1);
+     console.log(notNowA);
+     localStorage.setItem("notNowA", JSON.stringify(notNowA));
+  }
+}
+     refreshTitles();
+     
+ });
+
   $(".liInfo").on("click", function () {
     userHasSeenArr = JSON.parse(localStorage.getItem("userHasSeenArr"));
     tempM = $(this).parent()[0].previousSibling.textContent;

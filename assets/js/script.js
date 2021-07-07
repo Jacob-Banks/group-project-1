@@ -10,6 +10,7 @@ let movie,
   lat,
   lon,
   x,
+  country,
   newfilm,
   genres,
   conditions;
@@ -254,7 +255,7 @@ function getMovieInfo(movie) {
       const posterPath = value.poster_path;
       title = value.title;
       description = value.overview;
-      whereToWatch = value["watch/providers"].results.CA;
+      whereToWatch = value["watch/providers"].results[country];
       if (!("flatrate" in whereToWatch)) {
         $("#stream").html(" ");
         $("#stream").html("Sorry can't find a Stream");
@@ -333,25 +334,41 @@ function refreshTitles() {
   $("#notNowMain").html(" ");
   for (item in yesA) {
     $("#yesMain").append(
-      `<div class="pure-g"><p class="pure-u-20-24">${yesA[item]}</p><span class="pure-u-2-24"><button class="pure-button liInfo"><i class="fas fa-info"></i></button></span> <span class="pure-u-1-24"><button class="pure-button liInfo"><i class="fas fa-trash-alt"></i></button></span><div>`
+      `<div class="pure-g"><p class="pure-u-20-24">${yesA[item]}</p><a href="#titleMain"  class="pure-u-2-24"><button class="pure-button liInfo"><i class="fas fa-info"></i></button></a> <span class="pure-u-1-24"><button class="pure-button liInfo"><i class="fas fa-trash-alt"></i></button></span><div>`
     );
   }
   for (item in maybeA) {
     $("#maybeMain").append(
-      `<div class="pure-g"><p class="pure-u-15-24">${maybeA[item]}</p><span class="pure-u-4-24"><button class="pure-button liInfo">info</button></span> <span class="pure-u-4-24"><button class="pure-button liInfo">delete</button></span><div>`
+      `<div class="pure-g"><p class="pure-u-15-24">${maybeA[item]}</p><a href="#titleMain"  class="pure-u-2-24"><button class="pure-button liInfo">info</button></a> <span class="pure-u-4-24"><button class="pure-button liInfo">delete</button></span><div>`
     );
   }
   for (item in notNowA) {
     $("#notNowMain").append(
-      `<div class="pure-g"><p class="pure-u-15-24">${notNowA[item]}</p><span class="pure-u-4-24"><button class="pure-button liInfo">info</button></span> <span class="pure-u-4-24"><button class="pure-button liInfo">delete</button></span><div>`
+      `<div class="pure-g"><p class="pure-u-15-24">${notNowA[item]}</p><a href="#titleMain"  class="pure-u-2-24"><button class="pure-button liInfo">info</button></a> <span class="pure-u-4-24"><button class="pure-button liInfo">delete</button></span><div>`
     );
   }
   $(".liInfo").on("click", function () {
-    //get id
     userHasSeenArr = JSON.parse(localStorage.getItem("userHasSeenArr"));
     tempM = $(this).parent()[0].previousSibling.textContent;
-    // console.log(tempM);
-
+    console.log(tempM);
+    let a = yesA.indexOf(tempM);
+    let b = maybeA.indexOf(tempM);
+    let c = notNowA.indexOf(tempM);
+    if (a >= 0) {
+      yesA.splice(a, 1);
+      localStorage.setItem("yesA", JSON.stringify(yesA));
+      refreshTitles();
+    }
+    if (b >= 0) {
+      maybeA.splice(b, 1);
+      localStorage.setItem("maybeA", JSON.stringify(maybeA));
+      refreshTitles();
+    }
+    if (c >= 0) {
+      notNowA.splice(c, 1);
+      localStorage.setItem("notNowA", JSON.stringify(notNowA));
+      refreshTitles();
+    }
     for (let i = 0; i < userHasSeenArr.length; i++) {
       if (tempM == userHasSeenArr[i].film) {
         //   console.log("  found ya");
@@ -407,6 +424,7 @@ $.ajax({
     lat = location.latitude;
     lon = location.longitude;
     city = location.city;
+    country = location.country_code;
     currentWeather();
     // console.log("got lat lon");
   }, // if cant find user locationt

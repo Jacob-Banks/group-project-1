@@ -22,6 +22,10 @@ body {
   display: flex;
   justify-content: center;
 }
+#description {
+  margin: 20px;
+  font-weight: bold;
+}
 #titleMain {
   margin-top: 0px;
   font-size: 30px;

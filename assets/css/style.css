@@ -2,7 +2,6 @@
 /* .movieList::-webkit-scrollbar {
   display: none;
 }
-
 /* Hide scrollbar for IE, Edge and Firefox */
 /*.movieList {
   -ms-overflow-style: none; /* IE and Edge */
@@ -13,7 +12,9 @@ html {
   background-image: linear-gradient(to right, darkgray, gray);
 }
 body {
-  margin: 0 3px;
+  margin: auto;
+  max-width:1200px; 
+  
 }
 #header {
   background-image: linear-gradient(to right, gray, black);
@@ -46,8 +47,8 @@ body {
   background-image: linear-gradient(to right, #f5c518, black);
   border-radius: 0.1cm;
 }
-#aside {
-  margin-top: 5px;
+#main {
+  margin-top: 40px;
 }
 .myList {
   text-align: center;
@@ -212,4 +213,8 @@ h3 {
   background: #f5c518;
   padding: 3px;
   margin: 0;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> feature/delete

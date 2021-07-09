@@ -1,73 +1,170 @@
 <!DOCTYPE html>
-<html lang="en">
+    <html lang="en">
 
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--juery, stylesheet, pure grids, fontawesome-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
+            integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/grids-responsive-min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+        <link rel="stylesheet" href="./assets/css/style.css" />
+        <title>Document</title>
+    </head>
 
-    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css"
-        integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/grids-responsive-min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    <title>Document</title>
-</head>
+    <!-- display INTRO MODAL on page load-->
+    <div id="modal-1" class="modal animate-opacity">
+        <div class="modal-content">
+            <div class="modal-inner">
+                <!-- <span onclick="document.getElementById('modal-1').style.display='none'" class="modal-close">&times;</span>-->
+                <h4>Welcome!</h4>
 
-<!-- display INTRO MODAL on page load-->
-<div id="modal-1" class="modal animate-opacity">
-    <div class="modal-content">
-        <div class="modal-inner">
-            <!-- <span onclick="document.getElementById('modal-1').style.display='none'" class="modal-close">&times;</span>-->
-            <h4>Welcome!</h4>
-            <div id="modal-text"></div>
-            <p>Close this window to start!</p>
-            <button id="close">Close and Start</button>
+                <div id="modal-text"></div>
+                <p id="paraGenres">your genres are </p>
+                <p>Total movies availible:<span id="results"></span> </p>
+                <p> not interested in those genres pick your own!</p>
+                <label for="change">Choose a genre:</label>
+
+                <select name="change" id="change">
+                    <option value="28,">action</option>
+                    <option value="12,">Adventure</option>
+                    <option value="35,">Comedy</option>
+                    <option value="80,">Crime</option>
+                    <option value="99,">Documentary</option>
+                    <option value="18,">Drama</option>
+                    <option value="10751,">Family</option>
+                    <option value="14,">Fantasy</option>
+                    <option value="36,">History</option>
+                    <option value="27,">Horror</option>
+                    <option value="10402,">Music</option>
+                    <option value="9648,">Mystery</option>
+                    <option value="10749,">Romance</option>
+                    <option value="878,">Science Fiction</option>
+                    <option value="10770,">Tv Movie</option>
+                    <option value="53,">Thriller</option>
+                    <option value="10752,">War</option>
+                    <option value="37,">Western</option>
+                </select>
+                <br>
+                <label for="change2">Choose a genre:</label>
+
+                <select name="change2" id="change2">
+                    <option value="">none</option>
+                    <option value="28,">action</option>
+                    <option value="12,">Adventure</option>
+                    <option value="35,">Comedy</option>
+                    <option value="80,">Crime</option>
+                    <option value="99,">Documentary</option>
+                    <option value="18,">Drama</option>
+                    <option value="10751,">Family</option>
+                    <option value="14,">Fantasy</option>
+                    <option value="36,">History</option>
+                    <option value="27,">Horror</option>
+                    <option value="10402,">Music</option>
+                    <option value="9648,">Mystery</option>
+                    <option value="10749,">Romance</option>
+                    <option value="878,">Science Fiction</option>
+                    <option value="10770,">Tv Movie</option>
+                    <option value="53,">Thriller</option>
+                    <option value="10752,">War</option>
+                    <option value="37,">Western</option>
+                </select>
+                <br>
+                <label for="change3">Choose a genre:</label>
+
+                <select name="change3" id="change3">
+                    <option value="">none</option>
+                    <option value="28,">action</option>
+                    <option value="12,">Adventure</option>
+                    <option value="35,">Comedy</option>
+                    <option value="80,">Crime</option>
+                    <option value="99,">Documentary</option>
+                    <option value="18,">Drama</option>
+                    <option value="10751,">Family</option>
+                    <option value="14,">Fantasy</option>
+                    <option value="36,">History</option>
+                    <option value="27,">Horror</option>
+                    <option value="10402,">Music</option>
+                    <option value="9648,">Mystery</option>
+                    <option value="10749,">Romance</option>
+                    <option value="878,">Science Fiction</option>
+                    <option value="10770,">Tv Movie</option>
+                    <option value="53,">Thriller</option>
+                    <option value="10752,">War</option>
+                    <option value="37,">Western</option>
+                </select>
+                <br>
+                <button id="submitChanges"> submit changes</button>
+
+                <p>Close this window to start!</p>
+                <button id="close">Close and Start</button>
+            </div>
         </div>
     </div>
-</div>
-<!--END OF INTRO MODAL-->
+    <!--END OF INTRO MODAL-->
+    <!--END OF INTRO MODAL-->
 
+<<<<<<< HEAD
 <body>
     <header id="header">
         <h1 id="titleMain">What 2 Watch</h1>
     </header>
+=======
+>>>>>>> feature/delete
 
-    <main>
+    <body>
+        <header id="header">
+            <h1 id="titleMain">What 2 Watch</h1>
+        </header>
 
-        <aside id="aside" class="pure-g">
+        
 
+        <main id="main" class="pure-g">
 
+<<<<<<< HEAD
             </div>
             <div id="poster" class="pure-u-11-24"></div>
             <div id="trailer" class="pure-u-12-24">
                 <div class="iframe-container">
                     <iframe id="iframe" src="" width="100%" frameborder="0" title="Responsive iframe"
                         allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+=======
+                <div id="poster" class="pure-u-11-24"></div>
+                <div id="trailer" class="pure-u-12-24">
+                    <div class="iframe-container">
+                        <iframe id="iframe" src="" width="100%" frameborder="0" title="Responsive iframe"
+                            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+                    <p id="cast"></p>
+>>>>>>> feature/delete
                 </div>
-                <p id="cast"></p>
             </div>
-        </aside>
-        </div>
+        </main>
+            
 
-        <!-- part where you'll find the poster of the movie, trailer and movie info-->
-        <div class="choices">
+            <!-- part where you'll find the poster of the movie, trailer and movie info-->
+            <div class="choices">
 
-            <button id="yes" class="pure-button">Yes</button>
-            <button id="maybe" class="pure-button">Maybe</button>
-            <button id="notNow" class="pure-button">Not today</button>
-            <button id="no" class="pure-button">No</button>
-
-        </div>
-
-        <div class="pure-g">
-
-            <div id="movieInfo" class="pure-u-1-1">
-                <h2 id="movieTitle"></h2>
+                <button id="yes" class="pure-button">Yes</button>
+                <button id="maybe" class="pure-button">Maybe</button>
+                <button id="notNow" class="pure-button">Not today</button>
+                <button id="no" class="pure-button">No</button>
 
             </div>
+
+            <details class="pure-g">
+
+                <div id="movieInfo" class="pure-u-1-1">
+                    <h2 id="movieTitle"></h2>
+
+                </div>
+            </div>
+<<<<<<< HEAD
         </div>
         <p id="description"></p>
         <div class="pure-g where2">
@@ -86,10 +183,30 @@
                 <h3>where to buy:</h3>
                 <div class="where" id="buy"></div>
             </div>
+=======
+            <p id="description"></p>
+            <div class="pure-g where2">
+
+                <div class="pure-u-1-3">
+                    <h3>where to stream:</h3>
+                    <div class="where" id="stream"></div>
+                </div>
+
+                <div class="pure-u-1-3">
+                    <h3>where to rent:</h3>
+                    <div class="where" id="rent"></div>
+                </div>
+
+                <div class="pure-u-1-3">
+                    <h3>where to buy:</h3>
+                    <div class="where" id="buy"></div>
+                </div>
+>>>>>>> feature/delete
 
 
-        </div>
+            </details>
 
+<<<<<<< HEAD
         <div class="pure-g">
             <div class="pure-u-1-1 pure-u-md-1-3">
                 <section class="myList">
@@ -109,16 +226,35 @@
                     <h4>Not Today:</h4>
                     <div class="movieList" id="notNowMain"></div>
                 </section>
+=======
+            <div class="pure-g">
+                <div class="pure-u-1-1 pure-u-md-1-3">
+                    <section class="myList">
+                        <h4>Definitly:</h4>
+                        <div class="movieList" id="yesMain"></div>
+                    </section>
+                </div>
+                <div class="pure-u-1-1 pure-u-md-1-3">
+                    <section class="myList middle">
+                        <h4>Maybe:</h4>
+                        <div class="movieList" id="maybeMain"></div>
+
+                    </section>
+                </div>
+                <div class="pure-u-1-1 pure-u-md-1-3">
+                    <section class="myList">
+                        <h4>Not Today:</h4>
+                        <div class="movieList" id="notNowMain"></div>
+                    </section>
+                </div>
+>>>>>>> feature/delete
             </div>
-        </div>
 
 
-    </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-    <script src="./assets/js/script.js"></script>
-</body>
-
-</html>
+        </main>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+        <script src="./assets/js/script.js"></script>
+    </body>

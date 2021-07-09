@@ -2,7 +2,6 @@
 /* .movieList::-webkit-scrollbar {
   display: none;
 }
-
 /* Hide scrollbar for IE, Edge and Firefox */
 /*.movieList {
   -ms-overflow-style: none; /* IE and Edge */
@@ -13,7 +12,9 @@ html {
   background-image: linear-gradient(to right, darkgray, gray);
 }
 body {
-  margin: 0 3px;
+  margin: auto;
+  max-width:1200px; 
+  
 }
 #header {
   background-image: linear-gradient(to right, gray, black);
@@ -21,6 +22,10 @@ body {
   color: white;
   display: flex;
   justify-content: center;
+}
+#description {
+  margin: 20px;
+  font-weight: bold;
 }
 #titleMain {
   margin-top: 0px;
@@ -42,12 +47,12 @@ body {
   background-image: linear-gradient(to right, #f5c518, black);
   border-radius: 0.1cm;
 }
-#aside {
-  margin-top: 5px;
+#main {
+  margin-top: 40px;
 }
 .myList {
   text-align: center;
-  margin: 3px;
+  margin: 15px 1.5px;
 
   background-image: linear-gradient(to right, #f5c518, black);
 }
@@ -57,7 +62,9 @@ body {
   padding: 0;
 }
 h4 {
+  padding: 10px;
   margin: 0 0 0 0;
+  font-size: 16px;
 }
 
 .iframe-container {
@@ -125,13 +132,26 @@ h3 {
   height: 500px;
   overflow: scroll;
 }
+.where2 {
+  padding-bottom: 30px;
+  border-bottom: 3px black solid;
+}
+.where {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.where img {
+  margin: 1px;
+}
 #yesMain,
 #notNowMain,
 #maybeMain {
   list-style: none;
   padding: 0;
   margin-top: 3px;
-  color: azure;
+  color: black;
+  font-weight: bold;
 }
 
 /* Styling intro modal */
@@ -186,13 +206,11 @@ h3 {
 }
 
 /* End of intro modal styles */
-.liInfo, .liTrash {
+.liInfo,
+.liTrash {
   border: black solid 1px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
   background: #f5c518;
   padding: 3px;
   margin: 0;
 }
-
-
-

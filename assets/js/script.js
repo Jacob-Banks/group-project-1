@@ -334,7 +334,7 @@ function getMovieInfo(movie) {
       }
       
       $("#cast").html(`
-      <p> Made With</p>
+      <p>Cast:</p>
         <ul class="cast">
           <li>${cast[0]}</li>
           <li>${cast[1]}</li>

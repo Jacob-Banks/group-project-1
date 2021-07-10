@@ -109,6 +109,8 @@
     <!--END OF INTRO MODAL-->
     <!--END OF INTRO MODAL-->
 
+
+    <!--header and navigation-->
     <body>
         <header id="header">
             <div class="pure-u-8-24"></div>
@@ -122,6 +124,7 @@
             <section id="aside" class="pure-g">
 
 
+            <!-- page loads content here, movie poster, trailer and cast, description, user can choose yes/no and add movie to list-->
                 
                 <div id="poster" class="pure-u-11-24"></div>
                 <div id="trailer" class="pure-u-12-24">
@@ -130,9 +133,9 @@
                             allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                     </div>
-                    <div class="pure-u-5-24"><p id="cast"></p></div>
-                    <div class="pure-u-17-24"><p id="description"></p></div>
-                    <div class="pure-u-23-24 choices"> <button id="yes" class="pure-button">Yes</button>
+                    <div class="pure-u-md-5-24"><p id="cast"></p></div>
+                    <div class="pure-u-md-17-24"><p id="description"></p></div>
+                    <div class="pure-u-md-23-24 choices"> <button id="yes" class="pure-button">Yes</button>
                         <button id="maybe" class="pure-button">Maybe</button>
                         <button id="notNow" class="pure-button">Not today</button>
                         <button id="no" class="pure-button">No</button></div>
@@ -140,16 +143,12 @@
             </section>
             
 
-            <!-- part where you'll find the poster of the movie, trailer and movie info-->
-            
-
                 <section id="movieInfo" class="pure-u-1-1">
                     <h2 id="movieTitle"></h2>
                 </section>
 
     
-                                
-          
+                           <!--where to watch section, netlfix, crave etc.--> 
             
             <div class="pure-g where2">
 
@@ -171,6 +170,7 @@
 
             </div>
 
+            <!-- My Lists section -->
             <section class="pure-g">
                 <div class="pure-u-1-1" id="lists">
                 <p><b>My Lists - </b>What 2 watch? Drag and drop titles between lists, delete titles or click info to see trailer and synopsis.</p></div>
@@ -194,9 +194,11 @@
                     </div>
                 </div>
             </section>
-
-
         </main>
+
+        <footer class="footer">
+            <a href="#header"><p id="w2w">What 2 Watch</p></a> was created by Jacob Banks, Mike Bombay, Anthony Cardozo and Ryan Diouf
+        </footer>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script

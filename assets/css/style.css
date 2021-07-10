@@ -21,35 +21,82 @@ body {
   height: 50px;
   color: white;
   display: flex;
-  justify-content: center;
 }
+
+#middle {
+  display: flex;
+  
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
+}
+
+#right {
+  text-align: right;
+  margin-right: 60px;
+  
+}
+
+#nav {
+  font-size: 16px;
+  color: #f5c518;
+  font-weight: 200;
+}
+a:link {
+  color: #f5c518;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #f5c518;
+  text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+  color: grey;
+}
+
 #description {
-  margin: 20px;
-  font-weight: bold;
+  margin: 10px;
+  font-size: 14px;
+  
 }
 #titleMain {
-  margin-top: 0px;
+  margin-top: 2px;
   font-size: 30px;
   font: 200;
   color: black;
   padding: 4px;
   background-color: #f5c518;
   border-radius: 0.1cm;
-  height: 40px;
+  height: 36px;
+  width: 196px;
+  
+  
+ 
+ 
+  
 }
+
+
 
 #movieTitle {
   margin-top: 0px;
   font-size: 30px;
   font: 200;
   color: black;
-  padding: 4px;
+  padding: 2px;
+  text-align: center;
   background-image: linear-gradient(to right, #f5c518, black);
-  border-radius: 0.1cm;
 }
+
+
 #main {
   margin-top: 40px;
 }
+
+
 .myList {
   text-align: center;
   margin: 15px 1.5px;
@@ -85,11 +132,14 @@ h4 {
   list-style: none;
   margin: 0;
   padding: 0;
+  font-size: 14px;
 }
 .choices {
   display: flex;
   justify-content: center;
+  margin-bottom: 2px;
 }
+
 
 .pure-button {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -109,41 +159,60 @@ h4 {
   display: block;
   margin-left: auto;
   margin-right: auto;
-
   width: auto;
+ 
 }
 #trailer {
   margin-left: 6px;
+ 
 }
 #movieInfo {
   margin: 5px 0;
   font-size: 30px;
+  height: 60px;
 }
 #movieInfo p {
-  font-size: 18px;
+  font-size: 14px;
 }
-#movieInfo h2,
-h3 {
+#movieInfo h3 {
   margin: 5px 0;
   display: block;
   text-align: center;
 }
-.movieList {
-  height: 500px;
-  overflow: scroll;
+
+.movieList::-webkit-scrollbar {
+  width: 8px;
+  background-color: black;
 }
+.movieList::-webkit-scrollbar-thumb {
+  background-color: #f5c518;
+  height: 20px;
+}
+.movieList {
+  height: 400px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
 .where2 {
   padding-bottom: 30px;
   border-bottom: 3px black solid;
 }
 .where {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
 }
 .where img {
   margin: 1px;
 }
+  #lists {
+    line-height: .5;
+  }
+.listHead {
+    background-color: rgb(19, 18, 8);
+    color: #f5c518;
+  }
+
 #yesMain,
 #notNowMain,
 #maybeMain {
@@ -213,8 +282,4 @@ h3 {
   background: #f5c518;
   padding: 3px;
   margin: 0;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> feature/delete

@@ -274,6 +274,13 @@ function checkMovie() {
       }
     });
   });
+
+  if (
+    seen >= movieValue.results.length - 1 &&
+    page === movieValue.total_pages
+  ) {
+    populateIntroModal();
+  }
   // if the user has seen all movies go to the next page of results
   if (seen >= movieValue.results.length - 1) {
     console.log("page full");
@@ -338,7 +345,7 @@ function getMovieInfo(movie) {
       }
 
       $("#cast").html(`
-      <p> Made With</p>
+      <p> Cast </p>
         <ul class="cast">
           <li>${cast[0]}</li>
           <li>${cast[1]}</li>
@@ -611,4 +618,8 @@ $("#no").click(function () {
   userHasSeenArr.push({ film: `${title}`, id: `${movie}` });
   localStorage.setItem("userHasSeenArr", JSON.stringify(userHasSeenArr));
   pickMovie();
+});
+//launch change genres on click
+$("#genreModal").click(function () {
+  populateIntroModal();
 });

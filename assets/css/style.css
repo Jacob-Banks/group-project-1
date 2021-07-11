@@ -13,58 +13,74 @@ html {
 }
 body {
   margin: auto;
-  max-width:1200px; 
-  
+  max-width: 1200px;
 }
+
+/*header style*/
+
 #header {
   background-image: linear-gradient(to right, gray, black);
   height: 50px;
   color: white;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 }
-#description {
-  margin: 20px;
-  font-weight: bold;
+
+#right {
+  display: flex;
+  text-align: right;
+  margin-right: 60px;
+  flex-direction: row;
 }
+
+.nav {
+  font-size: 16px;
+  color: #f5c518;
+  font-weight: 200;
+  margin: 10px;
+}
+a:link {
+  color: #f5c518;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #f5c518;
+  text-decoration: none;
+}
+
+a:hover {
+  color: grey;
+}
+
 #titleMain {
-  margin-top: 0px;
+  margin-top: 2px;
+  margin-left: 10px;
   font-size: 30px;
   font: 200;
   color: black;
   padding: 4px;
   background-color: #f5c518;
   border-radius: 0.1cm;
-  height: 40px;
+  height: 36px;
+  width: 196px;
 }
 
-#movieTitle {
-  margin-top: 0px;
-  font-size: 30px;
-  font: 200;
-  color: black;
-  padding: 4px;
-  background-image: linear-gradient(to right, #f5c518, black);
-  border-radius: 0.1cm;
-}
+/*page content, main movie info section*/
+
 #main {
   margin-top: 40px;
 }
-.myList {
-  text-align: center;
-  margin: 15px 1.5px;
 
-  background-image: linear-gradient(to right, #f5c518, black);
+#poster img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
 }
-.myList p {
-  text-align: left;
-  margin: 6px 0 6px 5px;
-  padding: 0;
-}
-h4 {
-  padding: 10px;
-  margin: 0 0 0 0;
-  font-size: 16px;
+
+#trailer {
+  margin-left: 6px;
 }
 
 .iframe-container {
@@ -81,14 +97,24 @@ h4 {
   top: 0;
   width: 100%;
 }
+#cast p {
+  margin: 8px;
+}
 .cast {
   list-style: none;
-  margin: 0;
+  margin-left: 8px;
   padding: 0;
+  font-size: 14px;
+}
+
+#description {
+  margin: 8px;
+  font-size: 14px;
 }
 .choices {
   display: flex;
   justify-content: center;
+  margin-bottom: 2px;
 }
 
 .pure-button {
@@ -105,45 +131,86 @@ h4 {
   color: #f5c518;
 }
 
-#poster img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-
-  width: auto;
-}
-#trailer {
-  margin-left: 6px;
+/*bottom title banner*/
+#movieTitle {
+  margin-top: 0px;
+  font-size: 30px;
+  font: 200;
+  color: black;
+  padding: 2px;
+  text-align: center;
+  background-image: linear-gradient(to right, #f5c518, black);
 }
 #movieInfo {
   margin: 5px 0;
   font-size: 30px;
+  height: 60px;
 }
 #movieInfo p {
-  font-size: 18px;
+  font-size: 14px;
 }
-#movieInfo h2,
-h3 {
+#movieInfo h3 {
   margin: 5px 0;
   display: block;
   text-align: center;
 }
-.movieList {
-  height: 500px;
-  overflow: scroll;
-}
+
+/*where to watch section*/
 .where2 {
+  text-align: center;
   padding-bottom: 30px;
   border-bottom: 3px black solid;
 }
 .where {
-  display: flex;
   justify-content: center;
+  display: flex;
   flex-wrap: wrap;
 }
 .where img {
   margin: 1px;
 }
+/*my lists section*/
+.myList {
+  text-align: center;
+  margin: 15px 1.5px;
+
+  background-image: linear-gradient(to right, #f5c518, black);
+}
+
+.myList p {
+  text-align: left;
+  margin: 6px 0 6px 5px;
+  padding: 0;
+}
+h4 {
+  padding: 10px;
+  margin: 0 0 0 0;
+  font-size: 16px;
+}
+
+.movieList::-webkit-scrollbar {
+  width: 8px;
+  background-color: black;
+}
+.movieList::-webkit-scrollbar-thumb {
+  background-color: #f5c518;
+  height: 20px;
+}
+.movieList {
+  height: 400px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#lists {
+  line-height: 1.5;
+  margin: 0 10px;
+}
+.listHead {
+  background-color: rgb(19, 18, 8);
+  color: #f5c518;
+}
+
 #yesMain,
 #notNowMain,
 #maybeMain {
@@ -152,6 +219,35 @@ h3 {
   margin-top: 3px;
   color: black;
   font-weight: bold;
+}
+
+.liInfo,
+.liTrash {
+  border: black solid 1px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  background: #f5c518;
+  padding: 3px;
+  margin: 0;
+}
+
+/* footer */
+
+.footer {
+  background-color: rgb(19, 18, 8);
+  min-height: 40px;
+  color: grey;
+  font-size: 12px;
+  text-align: center;
+}
+
+#w2w {
+  font-size: 16px;
+  font: 200;
+  color: black;
+  padding: 1px;
+  background-color: #f5c518;
+  border-radius: 0.1cm;
+  display: inline-block;
 }
 
 /* Styling intro modal */
@@ -204,17 +300,3 @@ h3 {
     opacity: 1;
   }
 }
-
-/* End of intro modal styles */
-.liInfo,
-.liTrash {
-  border: black solid 1px;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-  background: #f5c518;
-  padding: 3px;
-  margin: 0;
-<<<<<<< HEAD
-}
-=======
-}
->>>>>>> feature/delete

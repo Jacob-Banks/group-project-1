@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="genres"><button type="button" id="btn">btn</button>
+    <p>possible pages : <span id="pages"></span></p>
+    <p>possible films : <span id="results"></span></p>
+    <script>
+        var start = document.getElementById('btn')
+        start.addEventListener("click", () => {
+            var genres = document.getElementById('genres').value
+            console.log(genres)
+            function pickMovie(genres) {
+                fetch(
+                    //sort all movies by vote count in provided genres on this page.. api only allows 1 page with 20 results per fetch
+                    `https://api.themoviedb.org/3/discover/movie?api_key=eb7b39196026d99a9bb9dd30201f9b64&sort_by=vote_count.desc&with_genres=${genres}`
+                )
+                    .then((value) => value.json())
+                    .then((value) => {
+                        console.log(value);
+                        document.getElementById('pages').innerHTML = value.total_pages
+                        document.getElementById('results').innerHTML = value.total_results
+                    });
+            }
+            pickMovie(genres)
+        });
+    </script>
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="genres"><button type="button" id="btn">btn</button>
+    <p>possible pages : <span id="pages"></span></p>
+    <p>possible films : <span id="results"></span></p>
+    <script>
+        var start = document.getElementById('btn')
+        start.addEventListener("click", () => {
+            var genres = document.getElementById('genres').value
+            console.log(genres)
+            function pickMovie(genres) {
+                fetch(
+                    //sort all movies by vote count in provided genres on this page.. api only allows 1 page with 20 results per fetch
+                    `https://api.themoviedb.org/3/discover/movie?api_key=eb7b39196026d99a9bb9dd30201f9b64&sort_by=vote_count.desc&with_genres=${genres}`
+                )
+                    .then((value) => value.json())
+                    .then((value) => {
+                        console.log(value);
+                        document.getElementById('pages').innerHTML = value.total_pages
+                        document.getElementById('results').innerHTML = value.total_results
+                    });
+            }
+            pickMovie(genres)
+        });
+    </script>
+</body>
+
+</html>

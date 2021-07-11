@@ -169,7 +169,7 @@ var currentWeather = function () {
           if (conditions === "Thunderstorm" && temp >= 30) {
             genres = "35,80";
           }
-          console.log(genres);
+          // console.log(genres);
           // pickMovie(genres);
           populateIntroModal();
         });
@@ -184,7 +184,7 @@ function numberMovie() {
   )
     .then((value) => value.json())
     .then((value) => {
-      console.log(value);
+      //   console.log(value);
       //display total amount of movies availible for that genre combo
       document.getElementById("results").innerHTML = value.total_results;
     });
@@ -274,7 +274,7 @@ function checkMovie() {
       }
     });
   });
-
+  //check if all movies have been rated
   if (
     seen >= movieValue.results.length - 1 &&
     page === movieValue.total_pages
@@ -283,7 +283,7 @@ function checkMovie() {
   }
   // if the user has seen all movies go to the next page of results
   if (seen >= movieValue.results.length - 1) {
-    console.log("page full");
+    // console.log("page full");
     page++;
   }
   //select a new movie
@@ -316,7 +316,7 @@ function getMovieInfo(movie) {
       let youtubeKey = "";
       // if no videos hide iframe
       if (!value.videos.results.length) {
-        console.log("no video");
+        // console.log("no video");
         document.getElementById("iframe").src = "";
       } else {
         //find the video called trailer, this shows the last video labeled trailer
@@ -470,7 +470,7 @@ function refreshTitles() {
     for (var i = maybeA.length - 1; i >= 0; i--) {
       if (maybeA[i] === val) {
         maybeA.splice(i, 1);
-        console.log(maybeA);
+        //console.log(maybeA);
         localStorage.setItem("maybeA", JSON.stringify(maybeA));
       }
     }
@@ -478,7 +478,7 @@ function refreshTitles() {
     for (var i = notNowA.length - 1; i >= 0; i--) {
       if (notNowA[i] === val) {
         notNowA.splice(i, 1);
-        console.log(notNowA);
+        // console.log(notNowA);
         localStorage.setItem("notNowA", JSON.stringify(notNowA));
       }
     }
@@ -542,7 +542,7 @@ $(".movieList").sortable({
       .each(function () {
         var text = $(this).find("p").text().trim();
         tempArr.push(text);
-        console.log(text);
+        //  console.log(text);
       });
     //get the array it belongs/ed... does belongs first then it updates belonged
     //find which array
@@ -579,10 +579,10 @@ $.ajax({
     city = location.city;
     country = location.country_code;
     currentWeather();
-    console.log(location);
+    //  console.log(location);
   }, // if cant find user locationt
   error: function () {
-    console.log("error");
+    // console.log("error");
   },
 });
 

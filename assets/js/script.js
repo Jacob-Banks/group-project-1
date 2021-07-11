@@ -367,7 +367,7 @@ function getMovieInfo(movie) {
         //get stream if availible
         if (!("flatrate" in whereToWatch)) {
           $("#stream").html(" ");
-          $("#stream").html("Sorry can't find a Stream");
+          $("#stream").html("Sorry, can't find a stream");
         } else {
           $("#stream").html(" ");
           value["watch/providers"].results[country].flatrate.forEach(
@@ -383,7 +383,7 @@ function getMovieInfo(movie) {
         //get rent if availible
         if (!("rent" in whereToWatch)) {
           $("#rent").html(" ");
-          $("#rent").html("Sorry can't find a Stream");
+          $("#rent").html("Sorry, can't find where to rent.");
         } else {
           $("#rent").html(" ");
           value["watch/providers"].results[country].rent.forEach((element) => {
@@ -397,7 +397,7 @@ function getMovieInfo(movie) {
         //get buy if availible
         if (!("buy" in whereToWatch)) {
           $("#buy").html(" ");
-          $("#buy").html("Sorry can't find a Stream");
+          $("#buy").html("Sorry, can't find where to buy.");
         } else {
           $("#buy").html(" ");
           value["watch/providers"].results[country].buy.forEach((element) => {

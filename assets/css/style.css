@@ -8,15 +8,12 @@
 /* scrollbar-width: none; /* Firefox */
 /*} */
 
-
-
 html {
   background-image: linear-gradient(to right, darkgray, gray);
 }
 body {
   margin: auto;
-  max-width:1200px; 
-  
+  max-width: 1200px;
 }
 
 /*header style*/
@@ -26,26 +23,21 @@ body {
   height: 50px;
   color: white;
   display: flex;
-}
-
-#middle {
-  display: flex;
-  
-  justify-content: center;
-  text-align: center;
-  vertical-align: middle;
+  justify-content: space-between;
 }
 
 #right {
+  display: flex;
   text-align: right;
   margin-right: 60px;
-  
+  flex-direction: row;
 }
 
-#nav {
+.nav {
   font-size: 16px;
   color: #f5c518;
   font-weight: 200;
+  margin: 10px;
 }
 a:link {
   color: #f5c518;
@@ -61,9 +53,9 @@ a:hover {
   color: grey;
 }
 
-
 #titleMain {
   margin-top: 2px;
+  margin-left: 10px;
   font-size: 30px;
   font: 200;
   color: black;
@@ -72,7 +64,6 @@ a:hover {
   border-radius: 0.1cm;
   height: 36px;
   width: 196px;
-  
 }
 
 /*page content, main movie info section*/
@@ -86,12 +77,10 @@ a:hover {
   margin-left: auto;
   margin-right: auto;
   width: auto;
- 
 }
 
 #trailer {
   margin-left: 6px;
- 
 }
 
 .iframe-container {
@@ -108,24 +97,25 @@ a:hover {
   top: 0;
   width: 100%;
 }
+#cast p {
+  margin: 8px;
+}
 .cast {
   list-style: none;
-  margin: 0;
+  margin-left: 8px;
   padding: 0;
   font-size: 14px;
 }
 
 #description {
-  margin: 10px;
+  margin: 8px;
   font-size: 14px;
-  
 }
 .choices {
   display: flex;
   justify-content: center;
   margin-bottom: 2px;
 }
-
 
 .pure-button {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -140,8 +130,6 @@ a:hover {
   background: black;
   color: #f5c518;
 }
-
-
 
 /*bottom title banner*/
 #movieTitle {
@@ -169,10 +157,12 @@ a:hover {
 
 /*where to watch section*/
 .where2 {
+  text-align: center;
   padding-bottom: 30px;
   border-bottom: 3px black solid;
 }
 .where {
+  justify-content: center;
   display: flex;
   flex-wrap: wrap;
 }
@@ -198,8 +188,6 @@ h4 {
   font-size: 16px;
 }
 
-
-
 .movieList::-webkit-scrollbar {
   width: 8px;
   background-color: black;
@@ -214,14 +202,14 @@ h4 {
   overflow-x: hidden;
 }
 
-
-  #lists {
-    line-height: .5;
-  }
+#lists {
+  line-height: 1.5;
+  margin: 0 10px;
+}
 .listHead {
-    background-color: rgb(19, 18, 8);
-    color: #f5c518;
-  }
+  background-color: rgb(19, 18, 8);
+  color: #f5c518;
+}
 
 #yesMain,
 #notNowMain,
@@ -232,7 +220,6 @@ h4 {
   color: black;
   font-weight: bold;
 }
-
 
 .liInfo,
 .liTrash {
@@ -253,15 +240,15 @@ h4 {
   text-align: center;
 }
 
-#w2w { 
+#w2w {
   font-size: 16px;
   font: 200;
   color: black;
   padding: 1px;
   background-color: #f5c518;
   border-radius: 0.1cm;
-  display:inline-block
- }
+  display: inline-block;
+}
 
 /* Styling intro modal */
 .modal {
@@ -313,5 +300,3 @@ h4 {
     opacity: 1;
   }
 }
-
-
